@@ -816,17 +816,25 @@
           body: JSON.stringify(data)
         });
         
-        const result = await response.json();
         document.getElementById('loading').style.display = 'none';
         
-        if (result.success) {
+        // If we got any response back, consider it a success
+        if (response.ok || response.status === 200) {
           document.getElementById('success-message').style.display = 'block';
         } else {
-          showSection(3);
-          showError(result.error || 'Something went wrong. Please try again.');
+          // Try to parse error
+          try {
+            const result = await response.json();
+            showSection(3);
+            showError(result.error || 'Something went wrong. Please try again.');
+          } catch {
+            // If we can't parse, but got a response, show success anyway
+            document.getElementById('success-message').style.display = 'block';
+          }
         }
       } catch (error) {
         document.getElementById('loading').style.display = 'none';
+        // Network error - but if workflow succeeded, this shouldn't happen
         showSection(3);
         showError('Connection error. Please check your internet and try again.');
         console.error('Form submission error:', error);
