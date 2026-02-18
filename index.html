@@ -16,8 +16,8 @@
       --gold-lt:    #a8923a;
       --gold-btn:   #5c5020;
       --gold-hover: #4a4018;
-      --nav:        #6b7f9e;
-      --nav-dark:   #3d4f63;
+      --nav:        #34393c;
+      --nav-dark:   #252a2d;
       --text:       #1a1a1a;
       --text-mid:   #3d3d3d;
       --text-muted: #767676;
@@ -402,6 +402,11 @@
         <div class="step-num" id="s3"><span class="sn">3</span></div>
         <div class="step-label">Financials</div>
       </div>
+      <div class="step-sep"></div>
+      <div class="step" id="si4">
+        <div class="step-num" id="s4"><span class="sn">4</span></div>
+        <div class="step-label">Complete</div>
+      </div>
     </div>
 
     <!-- Layout -->
@@ -597,8 +602,9 @@
             <p>Preparing your valuation report&#8230;</p>
           </div>
 
-          <!-- Success -->
-          <div class="sscreen" id="ss">
+          <!-- Step 4: Success -->
+          <div class="fs" data-sec="4" id="ss-wrap">
+          <div class="sscreen on" id="ss">
             <div class="smark">
               <svg width="24" height="18" viewBox="0 0 24 18" fill="none">
                 <path d="M2 9L8.5 15.5L22 2" stroke="#8a7830" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -613,6 +619,7 @@
               Submission Received
             </div>
           </div>
+          </div><!-- /fs step 4 -->
         </div>
       </div>
 
@@ -630,7 +637,7 @@ const up = new URLSearchParams(location.search);
 document.querySelector('[name=campaignId]').value = up.get('campaign')||up.get('utm_campaign')||'';
 document.querySelector('[name=source]').value = up.get('source')||up.get('utm_source')||'Website';
 
-const TITLES = ['Contact Information','Business Details','Financial Information'];
+const TITLES = ['Contact Information','Business Details','Financial Information','Submission Complete'];
 
 const NT = {
   "11":{s:[{c:"111",l:"111 — Crop Production"},{c:"112",l:"112 — Animal Production & Aquaculture"},{c:"113",l:"113 — Forestry & Logging"},{c:"114",l:"114 — Fishing, Hunting & Trapping"},{c:"115",l:"115 — Agriculture & Forestry Support"}],g:{"111":[{c:"1111",l:"1111 — Oilseed & Grain Farming"},{c:"1112",l:"1112 — Vegetable & Melon Farming"},{c:"1113",l:"1113 — Fruit & Tree Nut Farming"},{c:"1114",l:"1114 — Greenhouse, Nursery & Floriculture"},{c:"1119",l:"1119 — Other Crop Farming"}],"112":[{c:"1121",l:"1121 — Cattle Ranching & Farming"},{c:"1122",l:"1122 — Hog & Pig Farming"},{c:"1123",l:"1123 — Poultry & Egg Production"},{c:"1124",l:"1124 — Sheep & Goat Farming"},{c:"1125",l:"1125 — Aquaculture"},{c:"1129",l:"1129 — Other Animal Production"}]}},
@@ -694,7 +701,7 @@ function collectCB(){
 }
 
 function upStepper(){
-  [1,2,3].forEach(n=>{
+  [1,2,3,4].forEach(n=>{
     const c=document.getElementById('s'+n),it=document.getElementById('si'+n);
     c.classList.remove('on','done'); it.classList.remove('on');
     if(n<cur) c.classList.add('done');
@@ -707,6 +714,7 @@ function showSec(n){
   document.querySelectorAll('.fs').forEach(s=>s.classList.remove('on'));
   document.querySelector(`[data-sec="${n}"]`).classList.add('on');
   cur=n; upStepper();
+  if(n===4){ document.getElementById('form-panel-head').style.display='none'; }
   document.querySelector('.form-panel').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
@@ -746,10 +754,10 @@ document.getElementById('vform').addEventListener('submit',async function(e){
   try{
     const r=await fetch(WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
     document.getElementById('ls').classList.remove('on');
-    if(r.ok||r.status===200){ document.getElementById('ss').classList.add('on'); }
+    if(r.ok||r.status===200){ document.getElementById('ls').classList.remove('on'); showSec(4); }
     else{
       try{const j=await r.json();document.getElementById('form-panel-head').style.display='';showSec(3);showErr(j.error||'Something went wrong. Please try again.');}
-      catch{document.getElementById('ss').classList.add('on');}
+      catch{document.getElementById('ls').classList.remove('on'); showSec(4);}
     }
   }catch{
     document.getElementById('ls').classList.remove('on');
