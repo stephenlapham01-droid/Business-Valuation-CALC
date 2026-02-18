@@ -3,847 +3,571 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free Business Valuation | Aurum Capital Connect</title>
+  <title>Business Valuation | Aurum Capital Connect</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect fill='%23111' width='32' height='32'/><rect x='3' y='8' width='14' height='14' rx='1.5' fill='none' stroke='%23a8923a' stroke-width='2' transform='rotate(-12 10 15)'/><rect x='15' y='10' width='14' height='14' rx='1.5' fill='none' stroke='%23c9ae55' stroke-width='2' transform='rotate(10 22 17)'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --aurum-black: #1a1a1a;
-      --aurum-charcoal: #2d2d2d;
-      --aurum-dark: #3d3d3d;
-      --aurum-gold: #9a8432;
-      --aurum-gold-light: #b39b3d;
-      --aurum-gold-dark: #7d6a28;
-      --aurum-cream: #f5f3ef;
-      --aurum-white: #ffffff;
-      --aurum-gray: #6b6b6b;
-      --aurum-light-gray: #e5e5e5;
+      --black:      #0c0c0c;
+      --card:       #161616;
+      --panel:      #1d1d1d;
+      --border:     rgba(168,146,58,0.18);
+      --bsoft:      rgba(255,255,255,0.07);
+      --gold:       #a8923a;
+      --gold-lt:    #c9ae55;
+      --gold-dim:   rgba(168,146,58,0.5);
+      --text:       #ede9e0;
+      --muted:      #756e65;
+      --soft:       #9e968e;
+      --input:      #101010;
+      --danger:     #c0392b;
     }
-    
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Montserrat', sans-serif;
-      background: var(--aurum-charcoal);
+      background: var(--black);
+      color: var(--text);
       min-height: 100vh;
-      color: var(--aurum-white);
     }
-    
-    .hero-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        linear-gradient(to bottom, rgba(26, 26, 26, 0.92), rgba(45, 45, 45, 0.95)),
-        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900"><rect fill="%231a1a1a" width="1440" height="900"/><g fill="%239a8432" fill-opacity="0.03"><rect x="100" y="200" width="3" height="400"/><rect x="150" y="250" width="2" height="350"/><rect x="200" y="180" width="4" height="420"/><rect x="280" y="220" width="2" height="380"/><rect x="350" y="160" width="3" height="440"/><rect x="420" y="200" width="2" height="400"/><rect x="500" y="240" width="4" height="360"/><rect x="580" y="180" width="2" height="420"/><rect x="650" y="210" width="3" height="390"/><rect x="730" y="170" width="2" height="430"/><rect x="800" y="230" width="4" height="370"/><rect x="880" y="190" width="2" height="410"/><rect x="950" y="220" width="3" height="380"/><rect x="1030" y="160" width="2" height="440"/><rect x="1100" y="200" width="4" height="400"/><rect x="1180" y="240" width="2" height="360"/><rect x="1250" y="180" width="3" height="420"/><rect x="1320" y="210" width="2" height="390"/></g></svg>');
-      background-size: cover;
-      background-position: center;
-      z-index: -1;
-    }
-    
-    .container {
-      max-width: 780px;
-      margin: 0 auto;
-      padding: 40px 20px;
-      position: relative;
-      z-index: 1;
-    }
-    
-    .header {
-      text-align: center;
-      padding: 20px 0;
-    }
-    
-    .form-card {
-      background: rgba(255, 255, 255, 0.98);
-      border-radius: 4px;
-      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
-      overflow: hidden;
-    }
-    
-    .form-header {
-      background: linear-gradient(135deg, var(--aurum-charcoal) 0%, var(--aurum-black) 100%);
-      padding: 40px 40px 35px;
-      text-align: center;
-      position: relative;
-    }
-    
-    .form-header::after {
+    body::before {
       content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 3px;
-      background: var(--aurum-gold);
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 50% at 15% 10%, rgba(168,146,58,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 40% at 85% 88%, rgba(168,146,58,0.04) 0%, transparent 55%);
     }
-    
-    .form-header h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 32px;
-      font-weight: 500;
-      color: var(--aurum-white);
-      margin-bottom: 10px;
-      font-style: italic;
+    .wrap { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 52px 24px 64px; }
+
+    /* ── Brand bar ── */
+    .brand { display: flex; align-items: center; justify-content: center; gap: 22px; margin-bottom: 46px; padding-bottom: 30px; border-bottom: 1px solid var(--border); }
+    .brand-div { width: 1px; height: 50px; background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent); }
+    .wordmark { display: flex; flex-direction: column; gap: 3px; }
+    .wm-name { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 500; letter-spacing: 7px; color: var(--gold-lt); line-height: 1; text-transform: uppercase; }
+    .wm-sub  { font-size: 9px; font-weight: 400; letter-spacing: 4px; color: var(--soft); text-transform: uppercase; }
+
+    /* ── Hero ── */
+    .hero { text-align: center; margin-bottom: 42px; }
+    .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 4.5vw, 38px); font-weight: 300; font-style: italic; color: var(--text); line-height: 1.2; margin-bottom: 10px; }
+    .hero h1 em { color: var(--gold-lt); font-style: italic; }
+    .hero p { font-size: 11px; font-weight: 400; letter-spacing: 2.5px; color: var(--muted); text-transform: uppercase; }
+
+    /* ── Stepper ── */
+    .stepper { display: flex; align-items: center; justify-content: center; margin-bottom: 42px; }
+    .step { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .sc {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 1.5px solid rgba(168,146,58,0.2);
+      background: var(--panel);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600; color: var(--muted);
+      transition: all 0.35s ease;
     }
-    
-    .form-header p {
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 14px;
-      font-weight: 300;
-      letter-spacing: 1px;
+    .sc.on  { border-color: var(--gold); color: var(--gold-lt); background: rgba(168,146,58,0.1); box-shadow: 0 0 22px rgba(168,146,58,0.18); }
+    .sc.done { border-color: var(--gold); background: var(--gold); color: var(--black); }
+    .sc.done::after { content: '✓'; font-size: 15px; font-weight: 700; }
+    .sc.done .sn { display: none; }
+    .sl { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); white-space: nowrap; transition: color 0.3s; }
+    .step.on .sl { color: var(--gold-lt); }
+    .sconn { width: 68px; height: 1px; background: rgba(168,146,58,0.13); margin: 0 4px 26px; flex-shrink: 0; transition: background 0.4s; }
+    .sconn.on { background: var(--gold-dim); }
+
+    /* ── Card ── */
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+    .card-body { padding: 46px 50px; }
+    @media (max-width: 640px) { .card-body { padding: 28px 22px; } }
+
+    /* ── Section title ── */
+    .stitle { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-weight: 400; color: var(--text); margin-bottom: 26px; padding-bottom: 14px; border-bottom: 1px solid var(--bsoft); display: flex; align-items: center; gap: 14px; }
+    .stitle::before { content: ''; width: 24px; height: 1.5px; background: linear-gradient(to right, var(--gold), transparent); flex-shrink: 0; }
+
+    /* ── Benefits ── */
+    .benefits { background: rgba(168,146,58,0.04); border: 1px solid var(--border); border-radius: 2px; padding: 22px 26px; margin-bottom: 26px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 22px; }
+    @media (max-width: 520px) { .benefits { grid-template-columns: 1fr; } }
+    .btitle { grid-column: 1/-1; font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 500; letter-spacing: 1px; color: var(--gold-lt); text-transform: uppercase; margin-bottom: 4px; }
+    .bi { display: flex; align-items: flex-start; gap: 9px; font-size: 12px; color: var(--soft); line-height: 1.5; }
+    .bi::before { content: '◆'; font-size: 5px; color: var(--gold); margin-top: 5px; flex-shrink: 0; }
+
+    /* ── Confidentiality ── */
+    .conf { border: 1px solid rgba(168,146,58,0.22); border-left: 3px solid var(--gold); background: rgba(168,146,58,0.03); border-radius: 2px; padding: 15px 20px; margin-bottom: 28px; }
+    .conf-head { font-size: 10px; font-weight: 600; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 6px; }
+    .conf p { font-size: 11.5px; color: var(--muted); line-height: 1.75; }
+    .conf a { color: var(--gold); text-decoration: none; }
+    .conf a:hover { text-decoration: underline; }
+
+    /* ── Sections ── */
+    .fs { display: none; }
+    .fs.on { display: block; animation: fadeUp 0.38s cubic-bezier(.22,.68,0,1.15) both; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+
+    /* ── Rows & fields ── */
+    .row  { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+    .row1 { grid-template-columns: 1fr; }
+    @media (max-width: 560px) { .row { grid-template-columns: 1fr; } }
+
+    .f { display: flex; flex-direction: column; gap: 7px; }
+    .f label { font-size: 10.5px; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; color: var(--soft); }
+    .f label .r { color: var(--gold); margin-left: 2px; }
+    .f input, .f select, .f textarea {
+      width: 100%; background: var(--input); border: 1px solid rgba(255,255,255,0.08); border-radius: 2px;
+      padding: 13px 16px; font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 300; color: var(--text);
+      transition: border-color .2s, box-shadow .2s, background .2s; -webkit-appearance: none; appearance: none;
     }
-    
-    .form-container {
-      padding: 40px;
-      color: var(--aurum-charcoal);
+    .f input::placeholder { color: rgba(158,150,142,0.38); font-size: 13px; }
+    .f textarea { min-height: 94px; resize: vertical; }
+    .f input:focus, .f select:focus, .f textarea:focus { outline: none; border-color: var(--gold); background: #131313; box-shadow: 0 0 0 3px rgba(168,146,58,0.08); }
+    .f select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23a8923a'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; cursor: pointer;
     }
-    
-    .progress-bar {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 35px;
+    .f select option { background: #1a1a1a; color: #ede9e0; }
+    .f input.bad, .f select.bad { border-color: var(--danger) !important; }
+
+    .pfx { position: relative; }
+    .pfx::before { content: '$'; position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--gold-dim); font-size: 14px; pointer-events: none; }
+    .pfx input { padding-left: 28px; }
+    .sfx { position: relative; }
+    .sfx::after  { content: '%'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--gold-dim); font-size: 14px; pointer-events: none; }
+    .sfx input { padding-right: 30px; }
+
+    /* ── NAICS ── */
+    .naics-sub  { display: none; }
+    .naics-sub.on  { display: flex; flex-direction: column; gap: 7px; animation: fadeUp .3s ease; }
+    .naics-row2 { display: none; }
+    .naics-row2.on { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; animation: fadeUp .3s ease; }
+    @media (max-width: 560px) { .naics-row2.on { grid-template-columns: 1fr; } }
+
+    /* ── Checkboxes ── */
+    .cb-head { font-size: 10.5px; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; color: var(--soft); display: block; margin-bottom: 9px; }
+    .cb-head span { font-size: 10px; color: var(--muted); letter-spacing: 0.5px; text-transform: none; font-weight: 300; }
+    .cb-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 2px; background: var(--input);
+      padding: 4px; max-height: 242px; overflow-y: auto;
     }
-    
-    .progress-step {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: var(--aurum-light-gray);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 14px;
-      color: var(--aurum-gray);
-      transition: all 0.3s ease;
-    }
-    
-    .progress-step.active {
-      background: var(--aurum-gold);
-      color: var(--aurum-white);
-      box-shadow: 0 4px 15px rgba(154, 132, 50, 0.4);
-    }
-    
-    .progress-step.completed {
-      background: var(--aurum-charcoal);
-      color: var(--aurum-white);
-    }
-    
-    .progress-line {
-      width: 60px;
-      height: 2px;
-      background: var(--aurum-light-gray);
-      transition: all 0.3s ease;
-    }
-    
-    .progress-line.active {
-      background: var(--aurum-gold);
-    }
-    
-    .benefits {
-      background: linear-gradient(135deg, rgba(154, 132, 50, 0.08) 0%, rgba(154, 132, 50, 0.03) 100%);
-      border: 1px solid rgba(154, 132, 50, 0.2);
-      border-radius: 4px;
-      padding: 25px;
-      margin-bottom: 30px;
-    }
-    
-    .benefits h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--aurum-charcoal);
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .benefits h3::before {
-      content: '';
-      width: 20px;
-      height: 2px;
-      background: var(--aurum-gold);
-    }
-    
-    .benefits ul {
-      list-style: none;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    
-    @media (max-width: 600px) {
-      .benefits ul { grid-template-columns: 1fr; }
-    }
-    
-    .benefits li {
-      padding: 8px 0 8px 25px;
-      position: relative;
-      color: var(--aurum-dark);
-      font-size: 13px;
-    }
-    
-    .benefits li::before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: var(--aurum-gold);
-      font-weight: bold;
-    }
-    
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 24px;
-      font-weight: 500;
-      color: var(--aurum-charcoal);
-      margin-bottom: 25px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--aurum-light-gray);
-      position: relative;
-    }
-    
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      width: 50px;
-      height: 2px;
-      background: var(--aurum-gold);
-    }
-    
-    .form-section {
-      display: none;
-    }
-    
-    .form-section.active {
-      display: block;
-      animation: fadeIn 0.4s ease;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 20px;
-    }
-    
-    .form-row.single { grid-template-columns: 1fr; }
-    
-    @media (max-width: 600px) {
-      .form-row { grid-template-columns: 1fr; }
-    }
-    
-    .form-group label {
-      display: block;
-      font-weight: 500;
-      color: var(--aurum-charcoal);
-      margin-bottom: 8px;
-      font-size: 13px;
-      letter-spacing: 0.5px;
-    }
-    
-    .form-group label .required { color: var(--aurum-gold-dark); }
-    
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 14px 16px;
-      border: 1px solid var(--aurum-light-gray);
-      border-radius: 3px;
-      font-size: 15px;
-      font-family: 'Montserrat', sans-serif;
-      transition: all 0.2s ease;
-      background: var(--aurum-white);
-      color: var(--aurum-charcoal);
-    }
-    
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--aurum-gold);
-      box-shadow: 0 0 0 3px rgba(154, 132, 50, 0.1);
-    }
-    
-    .form-group input::placeholder { color: #999; font-weight: 300; }
-    
-    .form-group textarea { min-height: 100px; resize: vertical; }
-    
-    .input-prefix { position: relative; }
-    .input-prefix input { padding-left: 30px; }
-    .input-prefix::before {
-      content: '$';
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--aurum-gray);
-      font-size: 15px;
-    }
-    
-    .input-suffix { position: relative; }
-    .input-suffix input { padding-right: 35px; }
-    .input-suffix::after {
-      content: '%';
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--aurum-gray);
-      font-size: 15px;
-    }
-    
-    .button-row {
-      display: flex;
-      gap: 15px;
-      margin-top: 35px;
-    }
-    
-    .btn {
-      padding: 16px 32px;
-      border-radius: 3px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: none;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      font-family: 'Montserrat', sans-serif;
-    }
-    
-    .btn-primary {
-      background: linear-gradient(135deg, var(--aurum-gold) 0%, var(--aurum-gold-dark) 100%);
-      color: var(--aurum-white);
-      flex: 1;
-    }
-    
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(154, 132, 50, 0.4);
-    }
-    
-    .btn-secondary {
-      background: transparent;
-      color: var(--aurum-charcoal);
-      border: 1px solid var(--aurum-light-gray);
-    }
-    
-    .btn-secondary:hover {
-      background: var(--aurum-cream);
-      border-color: var(--aurum-charcoal);
-    }
-    
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-    
-    .error-message {
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      color: #b91c1c;
-      padding: 14px 18px;
-      border-radius: 3px;
-      margin-bottom: 20px;
-      display: none;
-      font-size: 14px;
-    }
-    
-    .loading {
-      display: none;
-      text-align: center;
-      padding: 60px 40px;
-      color: var(--aurum-charcoal);
-    }
-    
-    .spinner {
-      width: 50px;
-      height: 50px;
-      border: 3px solid var(--aurum-light-gray);
-      border-top-color: var(--aurum-gold);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 25px;
-    }
-    
+    .cb-grid::-webkit-scrollbar { width: 4px; }
+    .cb-grid::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+    @media (max-width: 520px) { .cb-grid { grid-template-columns: 1fr; } }
+    .cbi { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 1px; cursor: pointer; transition: background .15s; }
+    .cbi:hover { background: rgba(168,146,58,0.07); }
+    .cbi input[type="checkbox"] { width: 14px; height: 14px; accent-color: var(--gold); cursor: pointer; flex-shrink: 0; }
+    .cbi span { font-size: 12px; color: var(--soft); font-weight: 300; line-height: 1.4; }
+
+    /* ── Error ── */
+    .ebar { background: rgba(192,57,43,0.1); border: 1px solid rgba(192,57,43,0.3); color: #e07060; padding: 12px 16px; border-radius: 2px; margin-bottom: 20px; font-size: 13px; display: none; }
+
+    /* ── Buttons ── */
+    .brow { display: flex; gap: 12px; margin-top: 36px; }
+    .btn { padding: 15px 28px; border: none; border-radius: 2px; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all .3s ease; }
+    .btn-g { background: linear-gradient(135deg, var(--gold-lt) 0%, var(--gold) 100%); color: var(--black); flex: 1; }
+    .btn-g:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(168,146,58,0.28); background: linear-gradient(135deg, #d5ba5c 0%, #b8a042 100%); }
+    .btn-o { background: transparent; color: var(--muted); border: 1px solid rgba(255,255,255,0.1); padding: 15px 22px; }
+    .btn-o:hover { border-color: rgba(168,146,58,0.38); color: var(--gold-lt); }
+
+    .pnote { font-size: 11px; color: var(--muted); text-align: center; margin-top: 22px; line-height: 1.7; }
+    .pnote a { color: var(--gold); text-decoration: none; }
+    .pnote a:hover { text-decoration: underline; }
+
+    /* ── Loading / Success ── */
+    .lscreen, .sscreen { display: none; flex-direction: column; align-items: center; justify-content: center; padding: 80px 40px; text-align: center; }
+    .lscreen.on, .sscreen.on { display: flex; }
+    .spin { width: 50px; height: 50px; border: 2px solid rgba(168,146,58,0.13); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 24px; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    
-    .loading p {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
-      font-style: italic;
-      color: var(--aurum-gray);
-    }
-    
-    .success-message {
-      display: none;
-      text-align: center;
-      padding: 60px 40px;
-      color: var(--aurum-charcoal);
-    }
-    
-    .success-icon {
-      width: 80px;
-      height: 80px;
-      background: var(--aurum-gold);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 25px;
-      font-size: 36px;
-      color: white;
-    }
-    
-    .success-message h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 28px;
-      font-weight: 500;
-      margin-bottom: 15px;
-    }
-    
-    .success-message p {
-      color: var(--aurum-gray);
-      margin-bottom: 15px;
-      line-height: 1.7;
-      font-size: 14px;
-    }
-    
-    .privacy-note {
-      font-size: 11px;
-      color: var(--aurum-gray);
-      text-align: center;
-      margin-top: 25px;
-      line-height: 1.6;
-    }
-    
-    .privacy-note a { color: var(--aurum-gold-dark); text-decoration: none; }
-    .privacy-note a:hover { text-decoration: underline; }
-    
-    .footer {
-      text-align: center;
-      padding: 30px 20px;
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 12px;
-    }
-    
-    .footer a { color: var(--aurum-gold); text-decoration: none; }
+    .lscreen p { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; color: var(--muted); }
+    .smark { width: 70px; height: 70px; border-radius: 50%; border: 1.5px solid var(--gold); display: flex; align-items: center; justify-content: center; margin-bottom: 26px; position: relative; }
+    .smark::before { content: ''; position: absolute; inset: 6px; border-radius: 50%; background: rgba(168,146,58,0.09); }
+    .smark svg { position: relative; z-index: 1; }
+    .sscreen h2 { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 400; font-style: italic; color: var(--text); margin-bottom: 14px; }
+    .sscreen p { font-size: 13px; color: var(--muted); max-width: 460px; line-height: 1.8; margin-bottom: 10px; }
+    .sbadge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); background: rgba(168,146,58,0.06); padding: 10px 20px; border-radius: 2px; margin-top: 10px; font-size: 10.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); }
+
+    /* ── Footer ── */
+    .footer { text-align: center; padding: 26px 0 0; font-size: 11px; color: var(--muted); letter-spacing: 0.5px; }
+    .footer a { color: rgba(168,146,58,0.5); text-decoration: none; }
   </style>
 </head>
 <body>
-  <div class="hero-bg"></div>
-  
-  <div class="container">
-    <div class="header"></div>
-    
-    <div class="form-card">
-      <div class="form-header">
-        <h1>Complimentary Business Valuation</h1>
-        <p>Discover what your business is worth in just a few minutes</p>
-      </div>
-      
-      <div class="form-container">
-        <div class="progress-bar">
-          <div class="progress-step active" data-step="1">1</div>
-          <div class="progress-line" data-line="1"></div>
-          <div class="progress-step" data-step="2">2</div>
-          <div class="progress-line" data-line="2"></div>
-          <div class="progress-step" data-step="3">3</div>
-        </div>
-        
-        <div id="error-message" class="error-message"></div>
-        
-        <form id="valuation-form">
-          <input type="hidden" name="source" value="Website">
-          <input type="hidden" name="campaignId" value="">
-          
-          <!-- Section 1: Contact Information -->
-          <div class="form-section active" data-section="1">
-            <h2 class="section-title">Contact Information</h2>
-            
-            <div class="benefits">
-              <h3>Your Complimentary Report Includes</h3>
-              <ul>
-                <li>Estimated business value range</li>
-                <li>Three valuation methodologies</li>
-                <li>Industry market research</li>
-                <li>Top 5-10 potential acquirers</li>
-              </ul>
-            </div>
-            
-            <div class="form-row">
-              <div class="form-group">
-                <label>Business Name <span class="required">*</span></label>
-                <input type="text" name="businessName" required placeholder="Your Company, Inc.">
-              </div>
-              <div class="form-group">
-                <label>Your Name <span class="required">*</span></label>
-                <input type="text" name="ownerName" required placeholder="John Smith">
-              </div>
-            </div>
-            
-            <div class="form-row">
-              <div class="form-group">
-                <label>Email Address <span class="required">*</span></label>
-                <input type="email" name="email" required placeholder="john@company.com">
-              </div>
-              <div class="form-group">
-                <label>Phone Number</label>
-                <input type="tel" name="phone" placeholder="(555) 123-4567">
-              </div>
-            </div>
-            
-            <div class="form-row single">
-              <div class="form-group">
-                <label>Website</label>
-                <input type="url" name="website" placeholder="https://www.yourcompany.com">
-              </div>
-            </div>
-            
-            <div class="button-row">
-              <button type="button" class="btn btn-primary" onclick="nextSection()">Continue</button>
-            </div>
+<div class="wrap">
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1>Complimentary <em>Business Valuation</em></h1>
+  </div>
+
+  <!-- Stepper -->
+  <div class="stepper">
+    <div class="step on" id="si1">
+      <div class="sc on" id="s1"><span class="sn">1</span></div>
+      <div class="sl">Contact</div>
+    </div>
+    <div class="sconn" id="c1"></div>
+    <div class="step" id="si2">
+      <div class="sc" id="s2"><span class="sn">2</span></div>
+      <div class="sl">Business</div>
+    </div>
+    <div class="sconn" id="c2"></div>
+    <div class="step" id="si3">
+      <div class="sc" id="s3"><span class="sn">3</span></div>
+      <div class="sl">Financials</div>
+    </div>
+  </div>
+
+  <!-- Card -->
+  <div class="card">
+    <div class="card-body">
+      <div id="ebar" class="ebar"></div>
+
+      <form id="vform" novalidate>
+        <input type="hidden" name="source" value="Website">
+        <input type="hidden" name="campaignId" value="">
+        <input type="hidden" name="competitiveAdvantages" value="">
+
+        <!-- §1 CONTACT -->
+        <div class="fs on" data-sec="1">
+          <div class="benefits">
+            <div class="btitle">What Your Report Includes</div>
+            <div class="bi">Estimated enterprise value range</div>
+            <div class="bi">Three independent valuation methodologies</div>
+            <div class="bi">In-depth industry &amp; market research</div>
+            <div class="bi">Top 5–10 identified strategic acquirers</div>
           </div>
-          
-          <!-- Section 2: Business Details -->
-          <div class="form-section" data-section="2">
-            <h2 class="section-title">Business Details</h2>
-            
-            <div class="form-row">
-              <div class="form-group">
-                <label>Industry <span class="required">*</span></label>
-                <select name="industry" required>
-                  <option value="">Select your industry</option>
-                  <option value="Technology">Technology</option>
-                  <option value="Healthcare">Healthcare</option>
-                  <option value="Manufacturing">Manufacturing</option>
-                  <option value="Professional Services">Professional Services</option>
-                  <option value="Financial Services">Financial Services</option>
-                  <option value="Food & Beverage">Food & Beverage</option>
-                  <option value="Construction">Construction</option>
-                  <option value="Real Estate">Real Estate</option>
-                  <option value="E-commerce">E-commerce</option>
-                  <option value="Retail">Retail</option>
-                  <option value="Energy">Energy</option>
-                  <option value="Transportation & Logistics">Transportation & Logistics</option>
-                  <option value="Other">Other</option>
+
+          <div class="conf">
+            <div class="conf-head">🔒 Strict Confidentiality Guaranteed</div>
+            <p>All information submitted is held in the strictest confidence by Aurum Capital Connect. Your business details, financial data, and personal information will never be shared, sold, or disclosed to any third party without your explicit written consent. Our advisors are bound by professional confidentiality standards and your identity remains anonymous throughout any preliminary market assessment. Protected under our <a href="https://www.aurumcapconnect.com/privacy" target="_blank">Privacy Policy</a> and Non-Disclosure obligations.</p>
+          </div>
+
+          <div class="stitle">Contact Information</div>
+
+          <div class="row">
+            <div class="f"><label>Business Name <span class="r">*</span></label><input type="text" name="businessName" required placeholder="Acme Holdings, Inc."></div>
+            <div class="f"><label>Your Name <span class="r">*</span></label><input type="text" name="ownerName" required placeholder="Jane Smith"></div>
+          </div>
+          <div class="row">
+            <div class="f"><label>Email Address <span class="r">*</span></label><input type="email" name="email" required placeholder="jane@company.com"></div>
+            <div class="f"><label>Phone Number</label><input type="tel" name="phone" placeholder="(555) 123-4567"></div>
+          </div>
+          <div class="row row1">
+            <div class="f"><label>Company Website</label><input type="url" name="website" placeholder="https://www.yourcompany.com"></div>
+          </div>
+          <div class="brow"><button type="button" class="btn btn-g" onclick="goNext()">Continue →</button></div>
+        </div>
+
+        <!-- §2 BUSINESS -->
+        <div class="fs" data-sec="2">
+          <div class="stitle">Business Details</div>
+
+          <div class="naics-wrap">
+            <div class="row" style="margin-bottom:18px;">
+              <div class="f">
+                <label>Primary Industry Sector <span class="r">*</span></label>
+                <select id="nsec" name="industrySector" required onchange="doSubsector()">
+                  <option value="">Select primary sector</option>
+                  <option value="11">11 — Agriculture, Forestry, Fishing &amp; Hunting</option>
+                  <option value="21">21 — Mining, Quarrying &amp; Oil/Gas Extraction</option>
+                  <option value="22">22 — Utilities</option>
+                  <option value="23">23 — Construction</option>
+                  <option value="31-33">31–33 — Manufacturing</option>
+                  <option value="42">42 — Wholesale Trade</option>
+                  <option value="44-45">44–45 — Retail Trade</option>
+                  <option value="48-49">48–49 — Transportation &amp; Warehousing</option>
+                  <option value="51">51 — Information</option>
+                  <option value="52">52 — Finance &amp; Insurance</option>
+                  <option value="53">53 — Real Estate &amp; Rental/Leasing</option>
+                  <option value="54">54 — Professional, Scientific &amp; Technical Services</option>
+                  <option value="55">55 — Management of Companies &amp; Enterprises</option>
+                  <option value="56">56 — Administrative &amp; Support / Waste Management</option>
+                  <option value="61">61 — Educational Services</option>
+                  <option value="62">62 — Health Care &amp; Social Assistance</option>
+                  <option value="71">71 — Arts, Entertainment &amp; Recreation</option>
+                  <option value="72">72 — Accommodation &amp; Food Services</option>
+                  <option value="81">81 — Other Services (except Public Administration)</option>
+                  <option value="92">92 — Public Administration</option>
                 </select>
               </div>
-              <div class="form-group">
-                <label>Sub-Industry / Specialization</label>
+              <div class="naics-sub f" id="nsubwrap">
+                <label>Industry Subsector</label>
+                <select id="nsub" name="industrySubsector" onchange="doGroup()">
+                  <option value="">Select subsector</option>
+                </select>
+              </div>
+            </div>
+            <div class="naics-row2" id="ngrow">
+              <div class="f">
+                <label>Industry Group</label>
+                <select id="ngrp" name="industryGroup"><option value="">Select industry group</option></select>
+              </div>
+              <div class="f">
+                <label>Additional Specialization</label>
                 <input type="text" name="subIndustry" placeholder="e.g., SaaS, Medical Devices, HVAC">
               </div>
             </div>
-            
-            <div class="form-row">
-              <div class="form-group">
-                <label>Business Type</label>
-                <select name="businessType">
-                  <option value="LLC">LLC</option>
-                  <option value="S-Corp">S-Corporation</option>
-                  <option value="C-Corp">C-Corporation</option>
-                  <option value="Partnership">Partnership</option>
-                  <option value="Sole Proprietorship">Sole Proprietorship</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Years in Business <span class="required">*</span></label>
-                <input type="number" name="yearsInBusiness" required min="0" placeholder="5">
-              </div>
-            </div>
-            
-            <div class="form-row">
-              <div class="form-group">
-                <label>Number of Employees</label>
-                <input type="number" name="numberOfEmployees" min="0" placeholder="25">
-              </div>
-              <div class="form-group">
-                <label>Location (City, State)</label>
-                <input type="text" name="location" placeholder="Denver, CO">
-              </div>
-            </div>
-            
-            <div class="form-row single">
-              <div class="form-group">
-                <label>Brief Business Description</label>
-                <textarea name="businessDescription" placeholder="Describe your core products/services and target market..."></textarea>
-              </div>
-            </div>
-            
-            <div class="button-row">
-              <button type="button" class="btn btn-secondary" onclick="prevSection()">Back</button>
-              <button type="button" class="btn btn-primary" onclick="nextSection()">Continue</button>
-            </div>
           </div>
-          
-          <!-- Section 3: Financial Information -->
-          <div class="form-section" data-section="3">
-            <h2 class="section-title">Financial Information</h2>
-            
-            <div class="form-row">
-              <div class="form-group">
-                <label>Annual Revenue <span class="required">*</span></label>
-                <div class="input-prefix">
-                  <input type="number" name="annualRevenue" required min="0" placeholder="1,000,000">
-                </div>
-              </div>
-              <div class="form-group">
-                <label>Annual EBITDA / Profit</label>
-                <div class="input-prefix">
-                  <input type="number" name="annualProfit" placeholder="150,000">
-                </div>
-              </div>
-            </div>
-            
-            <div class="form-row">
-              <div class="form-group">
-                <label>Revenue Growth Rate (YoY)</label>
-                <div class="input-suffix">
-                  <input type="number" name="revenueGrowthRate" min="-100" max="1000" placeholder="15">
-                </div>
-              </div>
-              <div class="form-group">
-                <label>Total Assets</label>
-                <div class="input-prefix">
-                  <input type="number" name="totalAssets" min="0" placeholder="500,000">
-                </div>
-              </div>
-            </div>
-            
-            <div class="form-row">
-              <div class="form-group">
-                <label>Total Liabilities</label>
-                <div class="input-prefix">
-                  <input type="number" name="totalLiabilities" min="0" placeholder="100,000">
-                </div>
-              </div>
-              <div class="form-group">
-                <label>Reason for Valuation</label>
-                <select name="valuationReason">
-                  <option value="General Interest">General Interest</option>
-                  <option value="Exit Planning">Exit Planning</option>
-                  <option value="Partnership Opportunity">Partnership Opportunity</option>
-                  <option value="Financing/Loan">Financing / Loan</option>
-                  <option value="Estate Planning">Estate Planning</option>
-                  <option value="Buy/Sell Agreement">Buy/Sell Agreement</option>
-                  <option value="Merger/Acquisition">Merger / Acquisition</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-            </div>
-            
-            <div class="form-row">
-              <div class="form-group">
-                <label>Timeframe</label>
-                <select name="timeframe">
-                  <option value="No Rush">No Rush - Just Curious</option>
-                  <option value="6-12 Months">Within 6-12 Months</option>
-                  <option value="3-6 Months">Within 3-6 Months</option>
-                  <option value="Immediate">Immediate Need</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Key Competitive Advantages</label>
-                <input type="text" name="competitiveAdvantages" placeholder="e.g., Patents, contracts, market position">
-              </div>
-            </div>
-            
-            <div class="form-row single">
-              <div class="form-group">
-                <label>Additional Notes or Questions</label>
-                <textarea name="additionalNotes" placeholder="Tell us anything else that might help us provide a more accurate valuation..."></textarea>
-              </div>
-            </div>
-            
-            <div class="button-row">
-              <button type="button" class="btn btn-secondary" onclick="prevSection()">Back</button>
-              <button type="submit" class="btn btn-primary">Get My Valuation</button>
-            </div>
-            
-            <p class="privacy-note">
-              By submitting this form, you agree to our <a href="https://www.aurumcapconnect.com/privacy" target="_blank">Privacy Policy</a>. 
-              Your information is confidential and will never be shared with third parties.
-            </p>
+
+          <div class="row">
+            <div class="f"><label>Business Structure</label><select name="businessType"><option value="LLC">LLC</option><option value="S-Corp">S-Corporation</option><option value="C-Corp">C-Corporation</option><option value="Partnership">Partnership</option><option value="Sole Proprietorship">Sole Proprietorship</option><option value="Other">Other</option></select></div>
+            <div class="f"><label>Years in Business <span class="r">*</span></label><input type="number" name="yearsInBusiness" required min="0" placeholder="e.g., 12"></div>
           </div>
-        </form>
-        
-        <div class="loading" id="loading">
-          <div class="spinner"></div>
-          <p>Preparing your valuation report...</p>
+          <div class="row">
+            <div class="f"><label>Number of Employees</label><input type="number" name="numberOfEmployees" min="0" placeholder="e.g., 45"></div>
+            <div class="f"><label>Headquarters (City, State)</label><input type="text" name="location" placeholder="Denver, CO"></div>
+          </div>
+          <div class="row row1">
+            <div class="f"><label>Brief Business Description</label><textarea name="businessDescription" placeholder="Describe your core products or services and the markets you serve..."></textarea></div>
+          </div>
+          <div class="brow">
+            <button type="button" class="btn btn-o" onclick="goPrev()">← Back</button>
+            <button type="button" class="btn btn-g" onclick="goNext()">Continue →</button>
+          </div>
         </div>
-        
-        <div class="success-message" id="success-message">
-          <div class="success-icon">✓</div>
-          <h2>Thank You</h2>
-          <p>Your complimentary business valuation report is being prepared and will be delivered to your email within the next few minutes.</p>
-          <p>Your report will include an estimated valuation range, industry market research, and a curated list of potential strategic acquirers.</p>
-          <p>Please check your inbox (and spam folder, just in case) for your comprehensive report from Aurum Capital Connect.</p>
+
+        <!-- §3 FINANCIALS -->
+        <div class="fs" data-sec="3">
+          <div class="stitle">Financial Information</div>
+
+          <div class="row">
+            <div class="f"><label>Annual Revenue <span class="r">*</span></label><div class="pfx"><input type="text" name="annualRevenue" required placeholder="1,000,000.00" oninput="fmtCur(this)" onblur="finCur(this)"></div></div>
+            <div class="f"><label>Annual EBITDA / Profit</label><div class="pfx"><input type="text" name="annualProfit" placeholder="150,000.00" oninput="fmtCur(this)" onblur="finCur(this)"></div></div>
+          </div>
+          <div class="row">
+            <div class="f"><label>Annual Revenue Growth Rate (YoY)</label><div class="sfx"><input type="number" name="revenueGrowthRate" step="0.1" min="-100" max="1000" placeholder="15.0"></div></div>
+            <div class="f"><label>Total Balance Sheet Assets</label><div class="pfx"><input type="text" name="totalAssets" placeholder="500,000.00" oninput="fmtCur(this)" onblur="finCur(this)"></div></div>
+          </div>
+          <div class="row">
+            <div class="f"><label>Total Balance Sheet Liabilities</label><div class="pfx"><input type="text" name="totalLiabilities" placeholder="100,000.00" oninput="fmtCur(this)" onblur="finCur(this)"></div></div>
+            <div class="f"><label>Reason for Valuation</label>
+              <select name="valuationReason">
+                <option value="General Interest">General Interest</option>
+                <option value="Exit Planning">Exit Planning</option>
+                <option value="Received Unsolicited Offer">Received Unsolicited Offer</option>
+                <option value="Partnership Opportunity">Partnership Opportunity</option>
+                <option value="Financing/Loan">Financing / Loan</option>
+                <option value="Estate Planning">Estate Planning</option>
+                <option value="Buy/Sell Agreement">Buy/Sell Agreement</option>
+                <option value="Merger/Acquisition">Merger / Acquisition</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="f"><label>Timing of Transaction</label>
+              <select name="timeframe">
+                <option value="No Rush">No Rush — Just Curious</option>
+                <option value="2+ Years">2+ Years Out</option>
+                <option value="12-24 Months">12–24 Months</option>
+                <option value="6-12 Months">Within 6–12 Months</option>
+                <option value="3-6 Months">Within 3–6 Months</option>
+                <option value="Immediate">Immediate Need</option>
+              </select>
+            </div>
+            <div class="f"><!-- spacer --></div>
+          </div>
+
+          <div class="row row1" style="margin-bottom:18px;">
+            <div>
+              <span class="cb-head">Key Competitive Advantages <span>(select all that apply)</span></span>
+              <div class="cb-grid" id="cbg">
+                <label class="cbi"><input type="checkbox" value="Proprietary Technology / Patents"><span>Proprietary Technology / Patents</span></label>
+                <label class="cbi"><input type="checkbox" value="Long-Term Customer Contracts"><span>Long-Term Customer Contracts</span></label>
+                <label class="cbi"><input type="checkbox" value="Recurring Revenue / Subscriptions"><span>Recurring Revenue / Subscriptions</span></label>
+                <label class="cbi"><input type="checkbox" value="Strong Brand Recognition"><span>Strong Brand Recognition</span></label>
+                <label class="cbi"><input type="checkbox" value="Dominant Market Position"><span>Dominant Market Position</span></label>
+                <label class="cbi"><input type="checkbox" value="Exclusive Supplier / Distribution Agreements"><span>Exclusive Supplier / Distribution Agreements</span></label>
+                <label class="cbi"><input type="checkbox" value="Proprietary Data / Databases"><span>Proprietary Data / Databases</span></label>
+                <label class="cbi"><input type="checkbox" value="Regulatory Licenses / Certifications"><span>Regulatory Licenses / Certifications</span></label>
+                <label class="cbi"><input type="checkbox" value="High Switching Costs for Customers"><span>High Switching Costs for Customers</span></label>
+                <label class="cbi"><input type="checkbox" value="Scalable / Platform Business Model"><span>Scalable / Platform Business Model</span></label>
+                <label class="cbi"><input type="checkbox" value="Experienced Management Team"><span>Experienced Management Team</span></label>
+                <label class="cbi"><input type="checkbox" value="Geographic / Market Exclusivity"><span>Geographic / Market Exclusivity</span></label>
+                <label class="cbi"><input type="checkbox" value="Cost Structure Advantage"><span>Cost Structure Advantage</span></label>
+                <label class="cbi"><input type="checkbox" value="Network Effects"><span>Network Effects</span></label>
+                <label class="cbi"><input type="checkbox" value="Strong Customer Relationships / NPS"><span>Strong Customer Relationships / NPS</span></label>
+                <label class="cbi"><input type="checkbox" value="Government Contracts / GSA Schedule"><span>Government Contracts / GSA Schedule</span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row row1">
+            <div class="f"><label>Additional Comments / Questions</label><textarea name="additionalNotes" placeholder="Share anything else that might help us provide a more accurate valuation..."></textarea></div>
+          </div>
+
+          <div class="brow">
+            <button type="button" class="btn btn-o" onclick="goPrev()">← Back</button>
+            <button type="submit" class="btn btn-g">Request My Valuation</button>
+          </div>
+          <p class="pnote">By submitting, you agree to our <a href="https://www.aurumcapconnect.com/privacy" target="_blank">Privacy Policy</a>. Your information is strictly confidential and will never be shared with third parties.</p>
+        </div>
+      </form>
+
+      <!-- Loading -->
+      <div class="lscreen" id="ls">
+        <div class="spin"></div>
+        <p>Preparing your valuation report…</p>
+      </div>
+
+      <!-- Success -->
+      <div class="sscreen" id="ss">
+        <div class="smark">
+          <svg width="26" height="20" viewBox="0 0 26 20" fill="none">
+            <path d="M2 10L9.5 17.5L24 2" stroke="#a8923a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2>Thank You</h2>
+        <p>Your complimentary business valuation report is being prepared. Our advisory team will have it delivered to your inbox within <strong style="color:var(--gold-lt)">1–2 business days</strong> from the time of your submission.</p>
+        <p>Your report will include an estimated valuation range using three independent methodologies, comprehensive industry and market research, and a curated list of potential strategic acquirers.</p>
+        <p>Please check your inbox — and your spam folder, just in case. For any immediate questions, don't hesitate to reach out to our team.</p>
+        <div class="sbadge">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="#a8923a" stroke-width="1.2"/><path d="M4 6l1.5 1.5L8 4" stroke="#a8923a" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Submission Received
         </div>
       </div>
     </div>
-    
-    <div class="footer">
-      <p>© 2025 Aurum Capital Connect | Denver & Dallas</p>
-      <p style="margin-top: 5px;"><a href="https://www.aurumcapconnect.com" target="_blank">www.aurumcapconnect.com</a></p>
-    </div>
   </div>
-  
-  <script>
-    // ============================================================
-    // IMPORTANT: Replace this URL with your n8n webhook URL
-    // ============================================================
-    const WEBHOOK_URL = 'https://stephenlapham01.app.n8n.cloud/webhook/business-valuation';
-    // Example: const WEBHOOK_URL = 'https://your-n8n.app.n8n.cloud/webhook/business-valuation';
-    // ============================================================
-    
-    let currentSection = 1;
-    const totalSections = 3;
-    
-    // Get campaign ID from URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const campaignId = urlParams.get('campaign') || urlParams.get('utm_campaign') || '';
-    const source = urlParams.get('source') || urlParams.get('utm_source') || 'Website';
-    
-    document.querySelector('input[name="campaignId"]').value = campaignId;
-    document.querySelector('input[name="source"]').value = source;
-    
-    function updateProgress() {
-      document.querySelectorAll('.progress-step').forEach((step, index) => {
-        const stepNum = index + 1;
-        step.classList.remove('active', 'completed');
-        if (stepNum < currentSection) step.classList.add('completed');
-        else if (stepNum === currentSection) step.classList.add('active');
-      });
-      
-      document.querySelectorAll('.progress-line').forEach((line, index) => {
-        line.classList.toggle('active', index + 1 < currentSection);
-      });
+
+  <div class="footer">
+    <p>© 2025 Aurum Capital Connect &nbsp;·&nbsp; Denver &amp; Dallas</p>
+    <p style="margin-top:4px"><a href="https://www.aurumcapconnect.com" target="_blank">www.aurumcapconnect.com</a></p>
+  </div>
+</div>
+
+<script>
+const WEBHOOK = 'https://stephenlapham01.app.n8n.cloud/webhook/business-valuation';
+let cur = 1;
+const up = new URLSearchParams(location.search);
+document.querySelector('[name=campaignId]').value = up.get('campaign')||up.get('utm_campaign')||'';
+document.querySelector('[name=source]').value = up.get('source')||up.get('utm_source')||'Website';
+
+// NAICS
+const NT = {
+  "11":{s:[{c:"111",l:"111 — Crop Production"},{c:"112",l:"112 — Animal Production & Aquaculture"},{c:"113",l:"113 — Forestry & Logging"},{c:"114",l:"114 — Fishing, Hunting & Trapping"},{c:"115",l:"115 — Agriculture & Forestry Support"}],g:{"111":[{c:"1111",l:"1111 — Oilseed & Grain Farming"},{c:"1112",l:"1112 — Vegetable & Melon Farming"},{c:"1113",l:"1113 — Fruit & Tree Nut Farming"},{c:"1114",l:"1114 — Greenhouse, Nursery & Floriculture"},{c:"1119",l:"1119 — Other Crop Farming"}],"112":[{c:"1121",l:"1121 — Cattle Ranching & Farming"},{c:"1122",l:"1122 — Hog & Pig Farming"},{c:"1123",l:"1123 — Poultry & Egg Production"},{c:"1124",l:"1124 — Sheep & Goat Farming"},{c:"1125",l:"1125 — Aquaculture"},{c:"1129",l:"1129 — Other Animal Production"}]}},
+  "21":{s:[{c:"211",l:"211 — Oil & Gas Extraction"},{c:"212",l:"212 — Mining (except Oil & Gas)"},{c:"213",l:"213 — Mining Support Activities"}],g:{"211":[{c:"2111",l:"2111 — Oil & Gas Extraction"}],"212":[{c:"2121",l:"2121 — Coal Mining"},{c:"2122",l:"2122 — Metal Ore Mining"},{c:"2123",l:"2123 — Nonmetallic Mineral Mining & Quarrying"}],"213":[{c:"2131",l:"2131 — Support Activities for Mining"}]}},
+  "22":{s:[{c:"221",l:"221 — Utilities"}],g:{"221":[{c:"2211",l:"2211 — Electric Power Generation, Transmission & Distribution"},{c:"2212",l:"2212 — Natural Gas Distribution"},{c:"2213",l:"2213 — Water, Sewage & Other Systems"}]}},
+  "23":{s:[{c:"236",l:"236 — Construction of Buildings"},{c:"237",l:"237 — Heavy & Civil Engineering Construction"},{c:"238",l:"238 — Specialty Trade Contractors"}],g:{"236":[{c:"2361",l:"2361 — Residential Building Construction"},{c:"2362",l:"2362 — Nonresidential Building Construction"}],"237":[{c:"2371",l:"2371 — Utility System Construction"},{c:"2372",l:"2372 — Land Subdivision"},{c:"2373",l:"2373 — Highway, Street & Bridge Construction"},{c:"2379",l:"2379 — Other Heavy & Civil Engineering"}],"238":[{c:"2381",l:"2381 — Foundation, Structure & Exterior"},{c:"2382",l:"2382 — Building Equipment Contractors"},{c:"2383",l:"2383 — Building Finishing Contractors"},{c:"2389",l:"2389 — Other Specialty Trade Contractors"}]}},
+  "31-33":{s:[{c:"311",l:"311 — Food Manufacturing"},{c:"312",l:"312 — Beverage & Tobacco Manufacturing"},{c:"313",l:"313 — Textile Mills"},{c:"315",l:"315 — Apparel Manufacturing"},{c:"321",l:"321 — Wood Product Manufacturing"},{c:"322",l:"322 — Paper Manufacturing"},{c:"324",l:"324 — Petroleum & Coal Products"},{c:"325",l:"325 — Chemical Manufacturing"},{c:"326",l:"326 — Plastics & Rubber Products"},{c:"327",l:"327 — Nonmetallic Mineral Products"},{c:"331",l:"331 — Primary Metal Manufacturing"},{c:"332",l:"332 — Fabricated Metal Products"},{c:"333",l:"333 — Machinery Manufacturing"},{c:"334",l:"334 — Computer & Electronic Products"},{c:"335",l:"335 — Electrical Equipment & Appliances"},{c:"336",l:"336 — Transportation Equipment"},{c:"337",l:"337 — Furniture & Related Products"},{c:"339",l:"339 — Miscellaneous Manufacturing"}],g:{"325":[{c:"3251",l:"3251 — Basic Chemical Manufacturing"},{c:"3252",l:"3252 — Resin, Rubber & Fiber"},{c:"3253",l:"3253 — Agricultural Chemicals"},{c:"3254",l:"3254 — Pharmaceutical & Medicine"},{c:"3255",l:"3255 — Paint, Coating & Adhesive"},{c:"3256",l:"3256 — Soap, Cleaning & Toilet Preparation"},{c:"3259",l:"3259 — Other Chemical Products"}],"334":[{c:"3341",l:"3341 — Computer & Peripheral Equipment"},{c:"3342",l:"3342 — Communications Equipment"},{c:"3343",l:"3343 — Audio & Video Equipment"},{c:"3344",l:"3344 — Semiconductor & Electronic Components"},{c:"3345",l:"3345 — Electronic Instruments"},{c:"3346",l:"3346 — Magnetic Media Manufacturing"}],"336":[{c:"3361",l:"3361 — Motor Vehicle Manufacturing"},{c:"3362",l:"3362 — Motor Vehicle Body & Trailer"},{c:"3363",l:"3363 — Motor Vehicle Parts"},{c:"3364",l:"3364 — Aerospace Product & Parts"},{c:"3366",l:"3366 — Ship & Boat Building"},{c:"3369",l:"3369 — Other Transportation Equipment"}]}},
+  "42":{s:[{c:"423",l:"423 — Merchant Wholesalers, Durable Goods"},{c:"424",l:"424 — Merchant Wholesalers, Nondurable Goods"},{c:"425",l:"425 — Electronic Markets & Agents/Brokers"}],g:{"423":[{c:"4231",l:"4231 — Motor Vehicle & Parts"},{c:"4232",l:"4232 — Furniture & Home Furnishing"},{c:"4233",l:"4233 — Lumber & Construction Materials"},{c:"4234",l:"4234 — Professional Equipment"},{c:"4235",l:"4235 — Metal & Minerals"},{c:"4236",l:"4236 — Electrical Apparatus & Equipment"},{c:"4237",l:"4237 — Hardware & Plumbing"},{c:"4238",l:"4238 — Machinery & Equipment"},{c:"4239",l:"4239 — Miscellaneous Durable Goods"}],"424":[{c:"4241",l:"4241 — Paper & Paper Products"},{c:"4242",l:"4242 — Drugs & Druggists' Sundries"},{c:"4243",l:"4243 — Apparel, Piece Goods & Notions"},{c:"4244",l:"4244 — Grocery & Related Products"},{c:"4245",l:"4245 — Farm Product Raw Materials"},{c:"4246",l:"4246 — Chemicals & Allied Products"},{c:"4247",l:"4247 — Petroleum & Petroleum Products"},{c:"4248",l:"4248 — Beer, Wine & Distilled Beverages"},{c:"4249",l:"4249 — Miscellaneous Nondurable Goods"}]}},
+  "44-45":{s:[{c:"441",l:"441 — Motor Vehicle & Parts Dealers"},{c:"442",l:"442 — Furniture & Home Furnishings Stores"},{c:"443",l:"443 — Electronics & Appliance Stores"},{c:"444",l:"444 — Building Material, Garden & Supply"},{c:"445",l:"445 — Food & Beverage Stores"},{c:"446",l:"446 — Health & Personal Care Stores"},{c:"447",l:"447 — Gasoline Stations"},{c:"448",l:"448 — Clothing & Accessories Stores"},{c:"451",l:"451 — Sporting Goods, Hobby, Book & Music"},{c:"452",l:"452 — General Merchandise Stores"},{c:"453",l:"453 — Miscellaneous Store Retailers"},{c:"454",l:"454 — Nonstore Retailers / E-Commerce"}],g:{}},
+  "48-49":{s:[{c:"481",l:"481 — Air Transportation"},{c:"482",l:"482 — Rail Transportation"},{c:"483",l:"483 — Water Transportation"},{c:"484",l:"484 — Truck Transportation"},{c:"485",l:"485 — Transit & Ground Passenger Transportation"},{c:"486",l:"486 — Pipeline Transportation"},{c:"487",l:"487 — Scenic & Sightseeing Transportation"},{c:"488",l:"488 — Support Activities for Transportation"},{c:"491",l:"491 — Postal Service"},{c:"492",l:"492 — Couriers & Messengers"},{c:"493",l:"493 — Warehousing & Storage"}],g:{}},
+  "51":{s:[{c:"511",l:"511 — Publishing Industries"},{c:"512",l:"512 — Motion Picture, Video & Sound Recording"},{c:"515",l:"515 — Broadcasting (except Internet)"},{c:"516",l:"516 — Internet Publishing & Web Search"},{c:"517",l:"517 — Telecommunications"},{c:"518",l:"518 — Data Processing, Hosting & Related"},{c:"519",l:"519 — Other Information Services"}],g:{"511":[{c:"5111",l:"5111 — Newspaper, Periodical & Book Publishers"},{c:"5112",l:"5112 — Software Publishers"}],"517":[{c:"5171",l:"5171 — Wired Telecommunications"},{c:"5172",l:"5172 — Wireless Telecommunications"},{c:"5173",l:"5173 — Telecommunications Resellers"},{c:"5174",l:"5174 — Satellite Telecommunications"},{c:"5179",l:"5179 — Other Telecommunications"}],"518":[{c:"5181",l:"5181 — Internet Service Providers & Hosting"},{c:"5182",l:"5182 — Data Processing & Related Services"}]}},
+  "52":{s:[{c:"521",l:"521 — Monetary Authorities — Central Bank"},{c:"522",l:"522 — Credit Intermediation & Related"},{c:"523",l:"523 — Securities, Commodity & Financial Services"},{c:"524",l:"524 — Insurance Carriers & Related"},{c:"525",l:"525 — Funds, Trusts & Other Financial Vehicles"}],g:{"522":[{c:"5221",l:"5221 — Depository Credit Intermediation"},{c:"5222",l:"5222 — Nondepository Credit Intermediation"},{c:"5223",l:"5223 — Activities Related to Credit Intermediation"}],"523":[{c:"5231",l:"5231 — Securities & Commodity Contracts"},{c:"5232",l:"5232 — Securities & Commodity Exchanges"},{c:"5239",l:"5239 — Other Financial Investment Activities"}],"524":[{c:"5241",l:"5241 — Insurance Carriers"},{c:"5242",l:"5242 — Insurance Agencies & Brokerages"}]}},
+  "53":{s:[{c:"531",l:"531 — Real Estate"},{c:"532",l:"532 — Rental & Leasing Services"},{c:"533",l:"533 — Lessors of Nonfinancial Intangible Assets"}],g:{"531":[{c:"5311",l:"5311 — Lessors of Real Estate"},{c:"5312",l:"5312 — Offices of Real Estate Agents & Brokers"},{c:"5313",l:"5313 — Activities Related to Real Estate"}],"532":[{c:"5321",l:"5321 — Automotive Equipment Rental & Leasing"},{c:"5322",l:"5322 — Consumer Goods Rental"},{c:"5323",l:"5323 — General Rental Centers"},{c:"5324",l:"5324 — Commercial Machinery & Equipment Rental"}]}},
+  "54":{s:[{c:"541",l:"541 — Professional, Scientific & Technical Services"}],g:{"541":[{c:"5411",l:"5411 — Legal Services"},{c:"5412",l:"5412 — Accounting & Bookkeeping"},{c:"5413",l:"5413 — Architectural & Engineering Services"},{c:"5414",l:"5414 — Specialized Design Services"},{c:"5415",l:"5415 — Computer Systems Design & Related"},{c:"5416",l:"5416 — Management & Technical Consulting"},{c:"5417",l:"5417 — Scientific Research & Development"},{c:"5418",l:"5418 — Advertising, PR & Related Services"},{c:"5419",l:"5419 — Other Professional & Technical Services"}]}},
+  "55":{s:[{c:"551",l:"551 — Management of Companies & Enterprises"}],g:{}},
+  "56":{s:[{c:"561",l:"561 — Administrative & Support Services"},{c:"562",l:"562 — Waste Management & Remediation"}],g:{"561":[{c:"5611",l:"5611 — Office Administrative Services"},{c:"5612",l:"5612 — Facilities Support Services"},{c:"5613",l:"5613 — Employment Services"},{c:"5614",l:"5614 — Business Support Services"},{c:"5615",l:"5615 — Travel Arrangement & Reservation"},{c:"5616",l:"5616 — Investigation & Security Services"},{c:"5617",l:"5617 — Services to Buildings & Dwellings"},{c:"5619",l:"5619 — Other Support Services"}],"562":[{c:"5621",l:"5621 — Waste Collection"},{c:"5622",l:"5622 — Waste Treatment & Disposal"},{c:"5629",l:"5629 — Remediation & Other Waste Management"}]}},
+  "61":{s:[{c:"611",l:"611 — Educational Services"}],g:{"611":[{c:"6111",l:"6111 — Elementary & Secondary Schools"},{c:"6112",l:"6112 — Junior Colleges"},{c:"6113",l:"6113 — Colleges & Universities"},{c:"6114",l:"6114 — Business Schools & Training"},{c:"6115",l:"6115 — Technical & Trade Schools"},{c:"6116",l:"6116 — Other Schools & Instruction"},{c:"6117",l:"6117 — Educational Support Services"}]}},
+  "62":{s:[{c:"621",l:"621 — Ambulatory Health Care Services"},{c:"622",l:"622 — Hospitals"},{c:"623",l:"623 — Nursing & Residential Care Facilities"},{c:"624",l:"624 — Social Assistance"}],g:{"621":[{c:"6211",l:"6211 — Offices of Physicians"},{c:"6212",l:"6212 — Offices of Dentists"},{c:"6213",l:"6213 — Offices of Other Health Practitioners"},{c:"6214",l:"6214 — Outpatient Care Centers"},{c:"6215",l:"6215 — Medical & Diagnostic Laboratories"},{c:"6216",l:"6216 — Home Health Care Services"},{c:"6219",l:"6219 — Other Ambulatory Health Care"}],"622":[{c:"6221",l:"6221 — General Medical & Surgical Hospitals"},{c:"6222",l:"6222 — Psychiatric & Substance Abuse Hospitals"},{c:"6223",l:"6223 — Specialty Hospitals"}]}},
+  "71":{s:[{c:"711",l:"711 — Performing Arts, Spectator Sports & Related"},{c:"712",l:"712 — Museums, Historical Sites & Zoos"},{c:"713",l:"713 — Amusement, Gambling & Recreation"}],g:{}},
+  "72":{s:[{c:"721",l:"721 — Accommodation"},{c:"722",l:"722 — Food Services & Drinking Places"}],g:{"721":[{c:"7211",l:"7211 — Traveler Accommodation"},{c:"7212",l:"7212 — RV Parks & Recreational Camps"},{c:"7213",l:"7213 — Rooming & Boarding Houses"}],"722":[{c:"7223",l:"7223 — Special Food Services / Catering"},{c:"7224",l:"7224 — Drinking Places"},{c:"7225",l:"7225 — Restaurants & Other Eating Places"}]}},
+  "81":{s:[{c:"811",l:"811 — Repair & Maintenance"},{c:"812",l:"812 — Personal & Laundry Services"},{c:"813",l:"813 — Religious, Civic, Professional Organizations"},{c:"814",l:"814 — Private Households"}],g:{"811":[{c:"8111",l:"8111 — Automotive Repair & Maintenance"},{c:"8112",l:"8112 — Electronic & Precision Equipment Repair"},{c:"8113",l:"8113 — Commercial & Industrial Machinery Repair"},{c:"8114",l:"8114 — Personal & Household Goods Repair"}],"812":[{c:"8121",l:"8121 — Personal Care Services"},{c:"8122",l:"8122 — Death Care Services"},{c:"8123",l:"8123 — Drycleaning & Laundry Services"},{c:"8129",l:"8129 — Other Personal Services"}]}},
+  "92":{s:[{c:"921",l:"921 — Executive, Legislative & Other Government"},{c:"922",l:"922 — Justice, Public Order & Safety"},{c:"923",l:"923 — Human Resource Programs"},{c:"924",l:"924 — Environment & Conservation Programs"},{c:"925",l:"925 — Community & Housing Programs"},{c:"926",l:"926 — Economic Programs Administration"},{c:"928",l:"928 — National Security & International Affairs"}],g:{}}
+};
+
+function doSubsector(){
+  const sv=document.getElementById('nsec').value;
+  const sw=document.getElementById('nsubwrap'), ss=document.getElementById('nsub');
+  const gr=document.getElementById('ngrow'), gs=document.getElementById('ngrp');
+  ss.innerHTML='<option value="">Select subsector</option>';
+  gs.innerHTML='<option value="">Select industry group</option>';
+  gr.classList.remove('on'); sw.classList.remove('on');
+  if(!sv||!NT[sv]) return;
+  NT[sv].s.forEach(x=>{const o=document.createElement('option');o.value=x.c;o.textContent=x.l;ss.appendChild(o);});
+  sw.classList.add('on');
+}
+function doGroup(){
+  const sv=document.getElementById('nsec').value, ssv=document.getElementById('nsub').value;
+  const gr=document.getElementById('ngrow'), gs=document.getElementById('ngrp');
+  gs.innerHTML='<option value="">Select industry group</option>'; gr.classList.remove('on');
+  if(!sv||!ssv||!NT[sv]) return;
+  const g=(NT[sv].g||{})[ssv]; if(!g||!g.length) return;
+  g.forEach(x=>{const o=document.createElement('option');o.value=x.c;o.textContent=x.l;gs.appendChild(o);});
+  gr.classList.add('on');
+}
+
+function fmtCur(el){
+  let r=el.value.replace(/[^0-9.]/g,'');
+  const p=r.split('.');
+  if(p.length>2) r=p[0]+'.'+p.slice(1).join('');
+  const i=r.split('.')[0], d=r.split('.')[1];
+  el.value=i.replace(/\B(?=(\d{3})+(?!\d))/g,',')+(d!==undefined?'.'+d:'');
+}
+function finCur(el){
+  const n=parseFloat(el.value.replace(/,/g,''));
+  if(!isNaN(n)) el.value=n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+function collectCB(){
+  const v=Array.from(document.querySelectorAll('#cbg input:checked')).map(c=>c.value);
+  document.querySelector('[name=competitiveAdvantages]').value=v.join('; ');
+}
+
+function upStepper(){
+  [1,2,3].forEach(n=>{
+    const c=document.getElementById('s'+n), it=document.getElementById('si'+n);
+    c.classList.remove('on','done'); it.classList.remove('on');
+    if(n<cur) c.classList.add('done');
+    else if(n===cur){c.classList.add('on');it.classList.add('on');}
+  });
+  [1,2].forEach(n=>document.getElementById('c'+n).classList.toggle('on',n<cur));
+}
+
+function showSec(n){
+  document.querySelectorAll('.fs').forEach(s=>s.classList.remove('on'));
+  document.querySelector(`[data-sec="${n}"]`).classList.add('on');
+  cur=n; upStepper();
+  document.querySelector('.card').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function check(n){
+  const sec=document.querySelector(`[data-sec="${n}"]`);
+  let ok=true;
+  sec.querySelectorAll('[required]').forEach(f=>{
+    const v=f.value.trim()!=='';
+    f.classList.toggle('bad',!v); if(!v) ok=false;
+  });
+  if(n===1){
+    const em=sec.querySelector('[name=email]');
+    const ve=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value);
+    em.classList.toggle('bad',!ve); if(!ve) ok=false;
+  }
+  return ok;
+}
+
+function goNext(){
+  if(check(cur)) showSec(cur+1);
+  else showErr('Please complete all required fields before continuing.');
+}
+function goPrev(){ if(cur>1) showSec(cur-1); }
+
+function showErr(m){
+  const e=document.getElementById('ebar');
+  e.textContent=m; e.style.display='block';
+  setTimeout(()=>e.style.display='none',5000);
+}
+
+document.getElementById('vform').addEventListener('submit',async function(e){
+  e.preventDefault();
+  if(!check(cur)){showErr('Please complete all required fields.');return;}
+  collectCB();
+  const data=Object.fromEntries(new FormData(e.target).entries());
+  ['annualRevenue','annualProfit','totalAssets','totalLiabilities'].forEach(k=>{if(data[k])data[k]=data[k].replace(/,/g,'');});
+  document.querySelectorAll('.fs').forEach(s=>s.classList.remove('on'));
+  document.getElementById('ls').classList.add('on');
+  try{
+    const r=await fetch(WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    document.getElementById('ls').classList.remove('on');
+    if(r.ok||r.status===200){ document.getElementById('ss').classList.add('on'); }
+    else{
+      try{const j=await r.json();showSec(3);showErr(j.error||'Something went wrong. Please try again.');}
+      catch{document.getElementById('ss').classList.add('on');}
     }
-    
-    function showSection(sectionNum) {
-      document.querySelectorAll('.form-section').forEach(section => section.classList.remove('active'));
-      document.querySelector(`[data-section="${sectionNum}"]`).classList.add('active');
-      currentSection = sectionNum;
-      updateProgress();
-      document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    
-    function validateSection(sectionNum) {
-      const section = document.querySelector(`[data-section="${sectionNum}"]`);
-      const requiredFields = section.querySelectorAll('[required]');
-      let isValid = true;
-      
-      requiredFields.forEach(field => {
-        if (!field.value.trim()) {
-          field.style.borderColor = '#b91c1c';
-          isValid = false;
-        } else {
-          field.style.borderColor = '#e5e5e5';
-        }
-      });
-      
-      if (sectionNum === 1) {
-        const email = section.querySelector('input[name="email"]');
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
-          email.style.borderColor = '#b91c1c';
-          isValid = false;
-        }
-      }
-      
-      return isValid;
-    }
-    
-    function nextSection() {
-      if (validateSection(currentSection)) {
-        if (currentSection < totalSections) showSection(currentSection + 1);
-      } else {
-        showError('Please complete all required fields.');
-      }
-    }
-    
-    function prevSection() {
-      if (currentSection > 1) showSection(currentSection - 1);
-    }
-    
-    function showError(message) {
-      const errorEl = document.getElementById('error-message');
-      errorEl.textContent = message;
-      errorEl.style.display = 'block';
-      setTimeout(() => errorEl.style.display = 'none', 5000);
-    }
-    
-    document.getElementById('valuation-form').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      if (!validateSection(currentSection)) {
-        showError('Please complete all required fields.');
-        return;
-      }
-      
-      // Check if webhook URL has been configured
-      if (WEBHOOK_URL === 'YOUR_N8N_WEBHOOK_URL_HERE') {
-        showError('Webhook URL not configured. Please update the WEBHOOK_URL in the HTML file.');
-        return;
-      }
-      
-      const formData = new FormData(e.target);
-      const data = Object.fromEntries(formData.entries());
-      
-      document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
-      document.getElementById('loading').style.display = 'block';
-      
-      try {
-        const response = await fetch(WEBHOOK_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        
-        document.getElementById('loading').style.display = 'none';
-        
-        // If we got any response back, consider it a success
-        if (response.ok || response.status === 200) {
-          document.getElementById('success-message').style.display = 'block';
-        } else {
-          // Try to parse error
-          try {
-            const result = await response.json();
-            showSection(3);
-            showError(result.error || 'Something went wrong. Please try again.');
-          } catch {
-            // If we can't parse, but got a response, show success anyway
-            document.getElementById('success-message').style.display = 'block';
-          }
-        }
-      } catch (error) {
-        document.getElementById('loading').style.display = 'none';
-        // Network error - but if workflow succeeded, this shouldn't happen
-        showSection(3);
-        showError('Connection error. Please check your internet and try again.');
-        console.error('Form submission error:', error);
-      }
-    });
-    
-    document.querySelectorAll('input, select, textarea').forEach(field => {
-      field.addEventListener('input', function() { this.style.borderColor = '#e5e5e5'; });
-    });
-  </script>
+  }catch{
+    document.getElementById('ls').classList.remove('on');
+    showSec(3); showErr('Connection error. Please check your internet and try again.');
+  }
+});
+
+document.querySelectorAll('input,select,textarea').forEach(f=>{f.addEventListener('input',()=>f.classList.remove('bad'));});
+</script>
 </body>
 </html>
