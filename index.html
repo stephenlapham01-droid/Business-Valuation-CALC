@@ -353,17 +353,17 @@
     .pnote a:hover { text-decoration:underline; }
 
     /* ── Loading ── */
-    .lscreen, .sscreen { display:none; flex-direction:column; align-items:center; justify-content:center; padding:72px 40px; text-align:center; }
+    .lscreen, .sscreen { display:none; flex-direction:column; align-items:center; justify-content:center; padding:56px 48px 64px; text-align:center; }
     .lscreen.on, .sscreen.on { display:flex; }
     .spin { width:44px; height:44px; border:2px solid var(--border); border-top-color:var(--gold); border-radius:50%; animation:spin 1s linear infinite; margin-bottom:22px; }
     @keyframes spin { to { transform:rotate(360deg); } }
     .lscreen p { font-family:'Cormorant Garamond',serif; font-size:18px; font-style:italic; color:var(--text-muted); }
 
     /* ── Success ── */
-    .smark { width:64px; height:64px; border-radius:50%; border:1.5px solid var(--gold); background:rgba(138,120,48,0.06); display:flex; align-items:center; justify-content:center; margin-bottom:24px; }
-    .sscreen h2 { font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:400; font-style:italic; color:var(--text); margin-bottom:14px; }
-    .sscreen p { font-size:13px; color:var(--text-muted); max-width:440px; line-height:1.8; margin-bottom:10px; }
-    .sbadge { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--border); background:var(--off-white); padding:10px 20px; margin-top:12px; font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); }
+    .smark { width:72px; height:72px; border-radius:50%; border:1.5px solid var(--gold); background:rgba(138,120,48,0.06); display:flex; align-items:center; justify-content:center; margin-bottom:28px; }
+    .sscreen h2 { font-family:'Cormorant Garamond',serif; font-size:38px; font-weight:400; font-style:italic; color:var(--text); margin-bottom:20px; letter-spacing:-0.3px; }
+    .sscreen p { font-size:14.5px; color:var(--text-mid); max-width:480px; line-height:1.95; margin-bottom:16px; }
+    .sbadge { display:inline-flex; align-items:center; gap:10px; border:1px solid var(--border); background:var(--off-white); padding:13px 26px; margin-top:20px; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); font-weight:500; }
 
     /* ── Footer ── */
     .footer { text-align:center; padding:28px 0 0; font-size:11px; color:var(--text-muted); }
@@ -705,7 +705,11 @@ function upStepper(){
     const c=document.getElementById('s'+n),it=document.getElementById('si'+n);
     c.classList.remove('on','done'); it.classList.remove('on');
     if(n<cur) c.classList.add('done');
-    else if(n===cur){c.classList.add('on');it.classList.add('on');}
+    else if(n===cur){
+      // Step 4 (Complete) shows filled/done when active, not just outlined
+      if(n===4){ c.classList.add('done'); } else { c.classList.add('on'); }
+      it.classList.add('on');
+    }
   });
   document.getElementById('panel-title').textContent = TITLES[cur-1];
 }
