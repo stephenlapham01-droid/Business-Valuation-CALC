@@ -188,23 +188,71 @@
       margin-top: 5px; flex-shrink: 0;
     }
     .conf-card {
-      background: #1a1a1a;
-      border: 1px solid #9a8432;
-      border-left: 4px solid #9a8432;
-      padding: 24px 22px 22px 20px;
+      background: linear-gradient(160deg, #141414 0%, #1e1a0e 100%);
+      border: 1px solid rgba(154,132,50,0.35);
+      padding: 0;
       margin-top: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    .conf-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #9a8432, #d4ac47, #9a8432);
     }
     .conf-head {
-      font-size: 11px; font-weight: 700;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: #d4ac47; margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid rgba(154,132,50,0.20);
     }
-    .conf-card p {
-      font-size: 12px; color: #ccc;
-      line-height: 1.85;
+    .conf-head-icon {
+      width: 28px; height: 28px; flex-shrink: 0;
+      border-radius: 50%;
+      background: rgba(154,132,50,0.12);
+      border: 1px solid rgba(154,132,50,0.30);
+      display: flex; align-items: center; justify-content: center;
     }
-    .conf-card a { color: #d4ac47; text-decoration: underline; }
-    .conf-card a:hover { color: #fff; }
+    .conf-head-text {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 2.2px; text-transform: uppercase;
+      color: #d4ac47; line-height: 1.3;
+    }
+    .conf-head-sub {
+      font-size: 9.5px; letter-spacing: 0.5px;
+      color: rgba(212,172,71,0.55); text-transform: none;
+      font-weight: 400; margin-top: 1px;
+    }
+    .conf-body { padding: 16px 20px 20px; }
+    .conf-item {
+      display: flex; gap: 10px;
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .conf-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .conf-item-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: #9a8432; margin-top: 7px; flex-shrink: 0;
+    }
+    .conf-item p {
+      font-size: 11.5px; color: rgba(220,215,200,0.80);
+      line-height: 1.75; margin: 0;
+    }
+    .conf-item strong { color: rgba(212,172,71,0.90); font-weight: 600; }
+    .conf-item a { color: #d4ac47; text-decoration: none; border-bottom: 1px solid rgba(212,172,71,0.30); }
+    .conf-item a:hover { color: #fff; border-bottom-color: rgba(255,255,255,0.40); }
+    .conf-footer {
+      margin: 0 20px 16px;
+      padding: 10px 12px;
+      background: rgba(154,132,50,0.08);
+      border: 1px solid rgba(154,132,50,0.20);
+      font-size: 10px; letter-spacing: 0.3px;
+      color: rgba(212,172,71,0.65);
+      line-height: 1.6; text-align: center;
+    }
 
     /* ── Form panel ── */
     .form-panel {
@@ -361,10 +409,72 @@
     .lscreen p { font-family:'Cormorant Garamond',serif; font-size:18px; font-style:italic; color:var(--text-muted); }
 
     /* ── Success ── */
-    .smark { width:72px; height:72px; border-radius:50%; border:1.5px solid var(--gold); background:rgba(138,120,48,0.06); display:flex; align-items:center; justify-content:center; margin-bottom:28px; }
-    .sscreen h2 { font-family:'Cormorant Garamond',serif; font-size:38px; font-weight:400; font-style:italic; color:var(--text); margin-bottom:20px; letter-spacing:-0.3px; }
-    .sscreen p { font-size:14.5px; color:var(--text-mid); max-width:480px; line-height:1.95; margin-bottom:16px; }
-    .sbadge { display:inline-flex; align-items:center; gap:10px; border:1px solid var(--border); background:var(--off-white); padding:13px 26px; margin-top:20px; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); font-weight:500; }
+    .sscreen { background: var(--white); }
+    .smark-wrap { margin-bottom: 32px; display:flex; flex-direction:column; align-items:center; gap:0; }
+    .smark-ring {
+      width: 64px; height: 64px; border-radius: 50%;
+      border: 1px solid rgba(138,120,48,0.25);
+      background: rgba(138,120,48,0.04);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .smark-ring::before {
+      content: '';
+      position: absolute; inset: -6px;
+      border-radius: 50%;
+      border: 1px solid rgba(138,120,48,0.12);
+    }
+    .sscreen-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px; font-weight: 300; font-style: italic;
+      color: var(--text); letter-spacing: -0.5px;
+      line-height: 1.1; margin-bottom: 6px;
+    }
+    .sscreen-sub {
+      font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 28px;
+    }
+    .sscreen-divider {
+      width: 40px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 28px;
+    }
+    .sscreen p { font-size:13.5px; color:var(--text-mid); max-width:440px; line-height:2.0; margin-bottom:14px; }
+    .sscreen-items {
+      display: flex; flex-direction: column; gap: 0;
+      border: 1px solid var(--border-lt);
+      max-width: 400px; width: 100%;
+      margin: 24px auto 0;
+    }
+    .sscreen-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border-lt);
+      font-size: 12px; color: var(--text-mid); line-height: 1.6;
+      text-align: left;
+    }
+    .sscreen-item:last-child { border-bottom: none; }
+    .sscreen-item-icon {
+      width: 18px; height: 18px; flex-shrink: 0;
+      border-radius: 50%;
+      background: rgba(138,120,48,0.08);
+      border: 1px solid rgba(138,120,48,0.20);
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+    .sbadge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--nav); color: rgba(255,255,255,0.85);
+      padding: 12px 24px; margin-top: 28px;
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      font-weight: 600;
+    }
+    .sbadge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0;
+      box-shadow: 0 0 0 3px rgba(138,120,48,0.25);
+    }
 
     /* ── Footer ── */
     .footer { text-align:center; padding:28px 0 0; font-size:11px; color:var(--text-muted); }
@@ -431,13 +541,31 @@
         </div>
         <div class="conf-card">
           <div class="conf-head">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13" viewBox="0 0 11 12" fill="none" style="display:inline-block;vertical-align:middle;margin-right:6px;margin-bottom:1px"><path d="M5.5 0.5L1 2.2v3.3c0 2.3 1.9 4.5 4.5 5.5 2.6-1 4.5-3.2 4.5-5.5V2.2L5.5 0.5z" stroke="#d4ac47" stroke-width="1.2" fill="rgba(212,172,71,0.12)"/><path d="M3.5 5.8l1.3 1.3 2.7-2.7" stroke="#d4ac47" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Strict Confidentiality &amp; Discretion
+            <div class="conf-head-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13" viewBox="0 0 11 12" fill="none"><path d="M5.5 0.5L1 2.2v3.3c0 2.3 1.9 4.5 4.5 5.5 2.6-1 4.5-3.2 4.5-5.5V2.2L5.5 0.5z" stroke="#d4ac47" stroke-width="1.1" fill="rgba(212,172,71,0.15)"/><path d="M3.5 5.8l1.3 1.3 2.7-2.7" stroke="#d4ac47" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="conf-head-text">Strict Confidentiality</div>
+              <div class="conf-head-sub">Licensed M&amp;A Advisory · FINRA Regulated</div>
+            </div>
           </div>
-          <p><strong style="color:#d4ac47;">Aurum Capital Connect, LLC is a licensed M&amp;A advisory firm.</strong> All information submitted through this form is treated with the highest degree of professional discretion and confidentiality.</p>
-          <p>Your submission and all associated financial data will never be shared with any third party — including potential buyers, competitors, or lenders — without your prior, explicit, written consent.</p>
-          <p>This engagement is entirely <strong style="color:#d4ac47;">non-binding and obligation-free.</strong> Submitting this form does not constitute a mandate, listing agreement, or any other contractual obligation.</p>
-          <p>All information is protected under our <a href="https://www.aurumcapconnect.com/privacy" target="_blank">Privacy Policy</a>, applicable state and federal confidentiality obligations, and our firm&#8217;s internal Non-Disclosure protocols. We operate under FINRA and applicable securities regulations governing licensed advisors.</p>
+          <div class="conf-body">
+            <div class="conf-item">
+              <div class="conf-item-dot"></div>
+              <p><strong>Never shared without consent.</strong> Your financials and business details will not be disclosed to any buyer, investor, or third party without your explicit written authorization.</p>
+            </div>
+            <div class="conf-item">
+              <div class="conf-item-dot"></div>
+              <p><strong>Entirely non-binding.</strong> This submission creates no mandate, listing agreement, or contractual obligation of any kind.</p>
+            </div>
+            <div class="conf-item">
+              <div class="conf-item-dot"></div>
+              <p><strong>Highest professional discretion.</strong> Protected under our <a href="https://www.aurumcapconnect.com/privacy" target="_blank">Privacy Policy</a>, internal NDA protocols, and applicable state &amp; federal confidentiality law.</p>
+            </div>
+          </div>
+          <div class="conf-footer">
+            Aurum Capital Connect, LLC &nbsp;·&nbsp; Licensed M&amp;A Advisor &nbsp;·&nbsp; FINRA &amp; Securities Regulations
+          </div>
         </div>
       </div>
 
@@ -621,18 +749,46 @@
           <!-- Step 4: Success -->
           <div class="fs" data-sec="4" id="ss-wrap">
           <div class="sscreen on" id="ss">
-            <div class="smark">
-              <svg width="24" height="18" viewBox="0 0 24 18" fill="none">
-                <path d="M2 9L8.5 15.5L22 2" stroke="#8a7830" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+            <div class="smark-wrap">
+              <div class="smark-ring">
+                <svg width="22" height="16" viewBox="0 0 24 18" fill="none">
+                  <path d="M2 9L8.5 15.5L22 2" stroke="#8a7830" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
             </div>
-            <h2>Thank You</h2>
-            <p>Your complimentary business valuation has been received. A licensed advisor from our <strong style="color:var(--gold)">Aurum Capital Connect</strong> team will be in touch within <strong style="color:var(--gold)">1&#8211;2 business days</strong> to discuss your valuation findings and answer any questions.</p>
-            <p>Your report will include an estimated enterprise value range using four independent methodologies (including a DCF with industry WACC), comprehensive 2025 market research, recent M&amp;A transactions, and a valuation football field chart.</p>
-            <p>All information you&#8217;ve shared is held in the strictest confidence and will never be disclosed to any third party without your written consent.</p>
+            <div class="sscreen-title">Thank You</div>
+            <div class="sscreen-sub">Submission Confirmed</div>
+            <div class="sscreen-divider"></div>
+            <p>A licensed advisor from <strong style="color:var(--text);">Aurum Capital Connect</strong> will be in touch within <strong style="color:var(--gold);">1&#8211;2 business days</strong> to walk you through your findings.</p>
+            <div class="sscreen-items">
+              <div class="sscreen-item">
+                <div class="sscreen-item-icon">
+                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#8a7830" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span>Enterprise value range across four independent methodologies</span>
+              </div>
+              <div class="sscreen-item">
+                <div class="sscreen-item-icon">
+                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#8a7830" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span>DCF model with industry WACC &amp; 5-year cash flow projection</span>
+              </div>
+              <div class="sscreen-item">
+                <div class="sscreen-item-icon">
+                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#8a7830" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span>Recent M&amp;A transactions &amp; valuation football field chart</span>
+              </div>
+              <div class="sscreen-item">
+                <div class="sscreen-item-icon">
+                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#8a7830" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span>All information held in strictest confidence — never shared without consent</span>
+              </div>
+            </div>
             <div class="sbadge">
-              <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" stroke="#8a7830" stroke-width="1.2"/><path d="M3.5 5.5l1.5 1.5L7.5 4" stroke="#8a7830" stroke-width="1.2" stroke-linecap="round"/></svg>
-              Submission Received
+              <div class="sbadge-dot"></div>
+              Aurum Capital Connect · Licensed M&amp;A Advisory
             </div>
           </div>
           </div><!-- /fs step 4 -->
