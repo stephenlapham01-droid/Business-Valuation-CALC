@@ -11,499 +11,300 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --white:      #ffffff;
-      --off-white:  #f7f6f3;
-      --bg:         #f4f3f0;
-      --gold:       #8a7830;
-      --gold-lt:    #a8923a;
-      --gold-btn:   #5c5020;
-      --gold-hover: #4a4018;
-      --nav:        #34393c;
-      --nav-dark:   #252a2d;
-      --text:       #1a1a1a;
-      --text-mid:   #3d3d3d;
-      --text-muted: #767676;
-      --border:     #d8d5cf;
-      --border-lt:  #e8e5de;
-      --focus:      #8a7830;
-      --danger:     #b91c1c;
-    }
+:root {
+  --white: #ffffff;
+  --off-white: #f7f6f3;
+  --bg: #f4f3f0;
+  --gold: #8a7830;
+  --gold-lt: #a8923a;
+  --gold-btn: #5c5020;
+  --gold-hover: #4a4018;
+  --nav: #34393c;
+  --nav-dark: #252a2d;
+  --text: #1a1a1a;
+  --text-mid: #3d3d3d;
+  --text-muted: #767676;
+  --border: #d8d5cf;
+  --border-lt: #e8e5de;
+  --focus: #8a7830;
+  --danger: #b91c1c;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+.nav { background: var(--nav); height: 84px; display: flex; align-items: center; padding: 0 40px; gap: 40px; position: sticky; top: 0; z-index: 100; }
+.nav-logo { display: flex; align-items: center; line-height: 0; margin-right: 8px; text-decoration: none; flex-shrink: 0; }
+.nav-logo img { height: 51px; width: auto; display: block; }
+.nav-link { font-size: 13px; font-weight: 400; color: rgba(255,255,255,0.88); text-decoration: none; letter-spacing: 0.3px; padding-bottom: 2px; transition: color 0.2s; position: relative; }
+.nav-link.active::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px; background: var(--white); }
+.nav-link:hover { color: var(--white); }
+.nav-spacer { flex: 1; }
+.page { max-width: 960px; margin: 0 auto; padding: 52px 40px 80px; }
+@media (max-width: 640px) { .page { padding: 36px 20px 60px; } }
+.page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 6vw, 52px); font-weight: 300; color: var(--text); line-height: 1.1; margin-bottom: 36px; letter-spacing: -0.5px; }
+.page-title em { font-style: italic; color: var(--gold); }
+.stepper { display: flex; align-items: center; gap: 0; margin-bottom: 40px; border-bottom: 2px solid var(--border-lt); padding-bottom: 20px; }
+.step { display: flex; align-items: center; gap: 10px; padding-right: 32px; cursor: default; }
+.step-num { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--text-muted); background: var(--white); transition: all 0.3s; flex-shrink: 0; }
+.step-num.on { border-color: var(--gold); color: var(--gold); background: rgba(138,120,48,0.06); }
+.step-num.done { border-color: var(--gold); background: var(--gold); color: var(--white); }
+.step-num.done::after { content: '✓'; font-size: 13px; }
+.step-num.done .sn { display: none; }
+.step-label { font-size: 12px; font-weight: 500; letter-spacing: 0.5px; color: var(--text-muted); text-transform: uppercase; transition: color 0.3s; }
+.step.on .step-label { color: var(--gold); }
+.step-sep { width: 32px; height: 1px; background: var(--border); margin-right: 32px; flex-shrink: 0; }
+.layout { display: grid; grid-template-columns: 260px 1fr; gap: 48px; align-items: start; }
+@media (max-width: 820px) { .layout { grid-template-columns: 1fr; } }
+.sidebar {}
+.sidebar-card { background: var(--white); border: 1px solid var(--border-lt); padding: 28px 24px; margin-bottom: 20px; }
+.sidebar-title { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 600; letter-spacing: 0.5px; color: var(--text); margin-bottom: 16px; text-transform: uppercase; }
+.sidebar-item { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border-lt); font-size: 12.5px; color: var(--text-mid); line-height: 1.5; }
+.sidebar-item:last-child { border-bottom: none; }
+.sidebar-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold-lt); margin-top: 5px; flex-shrink: 0; }
+.conf-card { background: linear-gradient(160deg, #f9f6ee 0%, #efe8d4 100%); border: 1px solid rgba(154,132,50,0.40); padding: 0; margin-top: 4px; overflow: hidden; position: relative; box-shadow: 0 4px 16px rgba(138,120,48,0.12); }
+.conf-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #8a7830, #c9a84c, #8a7830); }
+.conf-head { display: flex; align-items: center; gap: 10px; padding: 18px 20px 14px; border-bottom: 1px solid rgba(154,132,50,0.18); }
+.conf-head-icon { width: 28px; height: 28px; flex-shrink: 0; border-radius: 50%; background: rgba(138,120,48,0.10); border: 1px solid rgba(138,120,48,0.30); display: flex; align-items: center; justify-content: center; }
+.conf-head-text { font-size: 10px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: #6b5c24; line-height: 1.3; }
+.conf-head-sub { font-size: 9.5px; letter-spacing: 0.5px; color: rgba(107,92,36,0.65); text-transform: none; font-weight: 400; margin-top: 1px; }
+.conf-body { padding: 16px 20px 20px; }
+.conf-item { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid rgba(138,120,48,0.10); }
+.conf-item:last-child { border-bottom: none; padding-bottom: 0; }
+.conf-item-dot { width: 4px; height: 4px; border-radius: 50%; background: #8a7830; margin-top: 7px; flex-shrink: 0; }
+.conf-item p { font-size: 11.5px; color: var(--text-mid); line-height: 1.75; margin: 0; }
+.conf-item strong { color: #6b5c24; font-weight: 600; }
+.conf-item a { color: #8a7830; text-decoration: none; border-bottom: 1px solid rgba(138,120,48,0.35); }
+.conf-item a:hover { color: var(--text); border-bottom-color: var(--text); }
+.conf-footer { margin: 0 20px 16px; padding: 10px 12px; background: rgba(138,120,48,0.08); border: 1px solid rgba(138,120,48,0.18); font-size: 10px; letter-spacing: 0.3px; color: rgba(107,92,36,0.70); line-height: 1.6; text-align: center; }
+.form-panel { background: var(--white); border: 1px solid var(--border-lt); }
+.panel-head { padding: 28px 36px 22px; border-bottom: 1px solid var(--border-lt); }
+.panel-head-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: var(--text); display: flex; align-items: center; gap: 12px; }
+.panel-head-title::before { content: ''; width: 20px; height: 1.5px; background: var(--gold); flex-shrink: 0; }
+.panel-body { padding: 32px 36px 36px; }
+@media (max-width: 640px) { .panel-head { padding: 20px 20px 16px; } .panel-body { padding: 22px 20px 28px; } }
+.fs { display: none; }
+.fs.on { display: block; animation: fadeUp 0.35s cubic-bezier(.22,.68,0,1.1) both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+.row1 { grid-template-columns: 1fr; }
+@media (max-width: 560px) { .row { grid-template-columns: 1fr; } }
+.f { display: flex; flex-direction: column; gap: 6px; }
+.f label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-mid); }
+.f label .r { color: var(--gold); }
+.f input, .f select, .f textarea { width: 100%; background: var(--white); border: 1px solid var(--border); border-radius: 0; padding: 11px 14px; font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 300; color: var(--text); transition: border-color .2s, box-shadow .2s; -webkit-appearance: none; appearance: none; }
+.f input::placeholder { color: #bbb; font-size: 13px; }
+.f textarea { min-height: 90px; resize: vertical; }
+.f input:focus, .f select:focus, .f textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(138,120,48,0.09); }
+.f select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a7830'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 13px center; padding-right: 34px; cursor: pointer; }
+.f input.bad, .f select.bad { border-color: var(--danger); box-shadow: 0 0 0 3px rgba(185,28,28,0.07); }
+.pfx { position: relative; }
+.pfx::before { content:'$'; position:absolute; left:13px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:14px; pointer-events:none; }
+.pfx input { padding-left:26px; }
+.sfx { position: relative; }
+.sfx::after { content:'%'; position:absolute; right:13px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:14px; pointer-events:none; }
+.sfx input { padding-right:28px; }
+.naics-sub { display:none; }
+.naics-sub.on { display:flex; flex-direction:column; gap:6px; animation:fadeUp .3s ease; }
+.naics-row2 { display:none; }
+.naics-row2.on { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px; animation:fadeUp .3s ease; }
+@media(max-width:560px){ .naics-row2.on { grid-template-columns:1fr; } }
+.sec-rule { height: 1px; background: var(--border-lt); margin: 28px 0; }
+.cb-head { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-mid); display: block; margin-bottom: 10px; }
+.cb-head span { font-size: 10px; color: var(--text-muted); letter-spacing: 0.3px; text-transform: none; font-weight: 400; }
+.cb-grid { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border); max-height: 232px; overflow-y: auto; }
+.cb-grid::-webkit-scrollbar { width: 4px; }
+.cb-grid::-webkit-scrollbar-thumb { background: var(--border); }
+@media(max-width:520px){ .cb-grid { grid-template-columns:1fr; } }
+.cbi { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-bottom: 1px solid var(--border-lt); border-right: 1px solid var(--border-lt); cursor: pointer; transition: background .12s; font-size: 12px; color: var(--text-mid); font-weight: 300; }
+.cbi:hover { background: rgba(138,120,48,0.04); }
+.cbi input[type="checkbox"] { width:14px; height:14px; accent-color:var(--gold); cursor:pointer; flex-shrink:0; }
+.ebar { background: #fef2f2; border: 1px solid #fecaca; color: var(--danger); padding: 11px 16px; font-size: 13px; margin-bottom: 20px; display: none; }
+.brow { display:flex; gap:12px; margin-top:32px; padding-top:24px; border-top:1px solid var(--border-lt); }
+.btn { padding: 13px 32px; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; border: none; transition: all .25s ease; }
+.btn-gold { background: var(--nav); color: var(--white); flex: 1; }
+.btn-gold:hover { background: var(--nav-dark); }
+.btn-outline { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+.pnote { font-size:11px; color:var(--text-muted); text-align:center; margin-top:18px; line-height:1.7; }
+.pnote a { color:var(--gold); text-decoration:none; }
+.pnote a:hover { text-decoration:underline; }
+.ack-wrap { margin-top: 16px; padding: 14px 16px; background: var(--white); border: 1.5px solid var(--border); display: flex; align-items: flex-start; gap: 12px; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; }
+.ack-wrap:hover { border-color: var(--gold); }
+.ack-wrap.bad { border-color: var(--danger); box-shadow: 0 0 0 3px rgba(185,28,28,0.07); }
+.ack-wrap input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--gold); cursor: pointer; flex-shrink: 0; margin-top: 1px; }
+.ack-wrap span { font-size: 12px; color: var(--text-mid); line-height: 1.75; }
+.ack-wrap span a { color: var(--gold); text-decoration: none; }
+.ack-wrap span a:hover { text-decoration: underline; }
+.lscreen, .sscreen { display:none; flex-direction:column; align-items:center; justify-content:center; padding:56px 48px 64px; text-align:center; }
+.lscreen.on, .sscreen.on { display:flex; }
+.spin { width:44px; height:44px; border:2px solid var(--border); border-top-color:var(--gold); border-radius:50%; animation:spin 1s linear infinite; margin-bottom:22px; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.lscreen p { font-family:'Cormorant Garamond',serif; font-size:18px; font-style:italic; color:var(--text-muted); }
+.sscreen { background: var(--white); }
+.smark-wrap { margin-bottom: 32px; display:flex; flex-direction:column; align-items:center; gap:0; }
+.smark-ring { width: 64px; height: 64px; border-radius: 50%; border: 1px solid rgba(138,120,48,0.25); background: rgba(138,120,48,0.04); display: flex; align-items: center; justify-content: center; position: relative; }
+.smark-ring::before { content: ''; position: absolute; inset: -6px; border-radius: 50%; border: 1px solid rgba(138,120,48,0.12); }
+.sscreen-title { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; font-style: italic; color: var(--text); letter-spacing: -0.5px; line-height: 1.1; margin-bottom: 6px; }
+.sscreen-sub { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; }
+.sscreen-divider { width: 40px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 auto 28px; }
+.sscreen p { font-size:13.5px; color:var(--text-mid); max-width:440px; line-height:2.0; margin-bottom:14px; }
+.sscreen-items { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border-lt); max-width: 400px; width: 100%; margin: 24px auto 0; }
+.sscreen-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 18px; border-bottom: 1px solid var(--border-lt); font-size: 12px; color: var(--text-mid); line-height: 1.6; text-align: left; }
+.sscreen-item:last-child { border-bottom: none; }
+.sscreen-item-icon { width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; background: rgba(138,120,48,0.08); border: 1px solid rgba(138,120,48,0.20); display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+.sbadge { display: inline-flex; align-items: center; gap: 8px; background: var(--nav); color: rgba(255,255,255,0.85); padding: 12px 24px; margin-top: 28px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+.sbadge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; box-shadow: 0 0 0 3px rgba(138,120,48,0.25); }
+.site-footer { background: var(--nav); margin-top: 48px; }
+.footer-strip { display: grid; grid-template-columns: 1fr 1.2fr 1fr; max-width: 1200px; margin: 0 auto; min-height: 280px; }
+.footer-img { width: 100%; height: 100%; object-fit: cover; display: block; min-height: 280px; }
+.footer-center { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 36px 28px 28px; gap: 4px; }
+.footer-logo { height: 48px; width: auto; margin-bottom: 14px; opacity: 0.95; }
+.footer-offices { display: flex; gap: 40px; justify-content: center; margin-top: 4px; }
+.footer-office { text-align: center; }
+.footer-office-addr { font-size: 11px; color: rgba(255,255,255,0.65); line-height: 1.85; font-weight: 300; }
+.footer-office-phone { font-size: 11px; color: rgba(255,255,255,0.50); margin-top: 4px; font-weight: 300; letter-spacing: 0.5px; }
+.footer-office-phone a { color: rgba(255,255,255,0.50); text-decoration: none; }
+.footer-office-phone a:hover { color: var(--gold-lt); }
+.footer-office-email { font-size: 11px; color: rgba(255,255,255,0.50); margin-top: 2px; font-weight: 300; letter-spacing: 0.3px; }
+.footer-office-email a { color: rgba(255,255,255,0.50); text-decoration: none; }
+.footer-office-email a:hover { color: var(--gold-lt); }
+.footer-sep { width: 1px; background: rgba(255,255,255,0.10); align-self: stretch; margin: 8px 0; }
+.footer-compliance { background: rgba(52,57,60,1); border-top: 1px solid rgba(255,255,255,0.06); }
+.footer-compliance-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 28px; padding: 14px 24px; flex-wrap: wrap; }
+.footer-compliance-inner img { height: 18px; width: auto; opacity: 0.80; }
+.footer-compliance-inner img:hover { opacity: 1; }
+.footer-disclosure { background: var(--nav-dark); border-top: 1px solid rgba(255,255,255,0.04); }
+.footer-disclosure-inner { max-width: 860px; margin: 0 auto; padding: 14px 24px; font-size: 9px; color: rgba(255,255,255,0.30); text-align: center; line-height: 1.7; letter-spacing: 0.2px; }
+.footer-disclosure-inner a { color: var(--gold-lt); text-decoration: none; opacity: 0.7; }
+.footer-disclosure-inner a:hover { opacity: 1; text-decoration: underline; }
+.footer-copyright { background: var(--nav-dark); padding: 0 24px 16px; text-align: center; font-size: 10px; color: rgba(255,255,255,0.22); letter-spacing: 0.3px; }
+.footer-copyright a { color: rgba(255,255,255,0.30); text-decoration: none; }
+.footer-copyright a:hover { color: var(--gold-lt); }
+@media (max-width: 820px) { .footer-strip { grid-template-columns: 1fr; } .footer-img { max-height: 180px; } .footer-img.mobile-hide { display: none; } .footer-offices { flex-direction: column; gap: 20px; } .footer-sep { width: 40px; height: 1px; align-self: center; margin: 0; } }
+.revmix-hint { font-size: 10px; color: var(--text-muted); margin-top: 2px; font-style: italic; line-height: 1.5; min-height: 15px; transition: opacity 0.2s; }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+/* Mobile responsiveness additions */
+@media (max-width: 640px) {
+  .step-label { display: none; }
+  .step-num { width: 24px; height: 24px; font-size: 10px; }
+  .step { gap: 6px; padding-right: 16px; }
+}
 
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
+@media (max-width: 480px) {
+  .step-sep { display: none; }
+}
 
-    /* ── Nav bar ── */
-    .nav {
-      background: var(--nav);
-      height: 56px;
-      display: flex;
-      align-items: center;
-      padding: 0 40px;
-      gap: 40px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      line-height: 0;
-      margin-right: 8px;
-      text-decoration: none;
-      flex-shrink: 0;
-    }
-    .nav-logo img {
-      height: 34px;
-      width: auto;
-      display: block;
-    }
-    .nav-link {
-      font-size: 13px;
-      font-weight: 400;
-      color: rgba(255,255,255,0.88);
-      text-decoration: none;
-      letter-spacing: 0.3px;
-      padding-bottom: 2px;
-      transition: color 0.2s;
-      position: relative;
-    }
-    .nav-link.active::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0; right: 0;
-      height: 2px;
-      background: var(--white);
-    }
-    .nav-link:hover { color: var(--white); }
-    .nav-spacer { flex: 1; }
+@media (max-width: 820px) {
+  .sidebar { margin-bottom: 32px; padding: 0 4px; }
+}
 
-    /* ── Page wrapper ── */
-    .page {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 52px 40px 80px;
-    }
-    @media (max-width: 640px) { .page { padding: 36px 20px 60px; } }
+@media (max-width: 640px) {
+  .nav-link { display: none; }
+  .nav { padding: 0 20px; }
+}
 
-    /* ── Page title ── */
-    .page-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(36px, 6vw, 52px);
-      font-weight: 300;
-      color: var(--text);
-      line-height: 1.1;
-      margin-bottom: 36px;
-      letter-spacing: -0.5px;
-    }
-    .page-title em { font-style: italic; color: var(--gold); }
+@media (max-width: 400px) {
+  .cb-grid { grid-template-columns: 1fr; }
+}
 
-    /* ── Stepper ── */
-    .stepper {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      margin-bottom: 40px;
-      border-bottom: 2px solid var(--border-lt);
-      padding-bottom: 20px;
-    }
-    .step {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding-right: 32px;
-      cursor: default;
-    }
-    .step-num {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      border: 1.5px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 600;
-      color: var(--text-muted);
-      background: var(--white);
-      transition: all 0.3s;
-      flex-shrink: 0;
-    }
-    .step-num.on  { border-color: var(--gold); color: var(--gold); background: rgba(138,120,48,0.06); }
-    .step-num.done { border-color: var(--gold); background: var(--gold); color: var(--white); }
-    .step-num.done::after { content: '✓'; font-size: 13px; }
-    .step-num.done .sn { display: none; }
-    .step-label {
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      transition: color 0.3s;
-    }
-    .step.on .step-label { color: var(--gold); }
-    .step-sep { width: 32px; height: 1px; background: var(--border); margin-right: 32px; flex-shrink: 0; }
+/* New component styles */
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+}
 
-    /* ── Layout: sidebar + main ── */
-    .layout {
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      gap: 48px;
-      align-items: start;
-    }
-    @media (max-width: 820px) { .layout { grid-template-columns: 1fr; } }
+.btn-gold:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
-    /* ── Sidebar ── */
-    .sidebar {}
-    .sidebar-card {
-      background: var(--white);
-      border: 1px solid var(--border-lt);
-      padding: 28px 24px;
-      margin-bottom: 20px;
-    }
-    .sidebar-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      color: var(--text);
-      margin-bottom: 16px;
-      text-transform: uppercase;
-    }
-    .sidebar-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 7px 0;
-      border-bottom: 1px solid var(--border-lt);
-      font-size: 12.5px;
-      color: var(--text-mid);
-      line-height: 1.5;
-    }
-    .sidebar-item:last-child { border-bottom: none; }
-    .sidebar-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--gold-lt);
-      margin-top: 5px; flex-shrink: 0;
-    }
-    .conf-card {
-      background: linear-gradient(160deg, #141414 0%, #1e1a0e 100%);
-      border: 1px solid rgba(154,132,50,0.35);
-      padding: 0;
-      margin-top: 4px;
-      overflow: hidden;
-      position: relative;
-    }
-    .conf-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, #9a8432, #d4ac47, #9a8432);
-    }
-    .conf-head {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 18px 20px 14px;
-      border-bottom: 1px solid rgba(154,132,50,0.20);
-    }
-    .conf-head-icon {
-      width: 28px; height: 28px; flex-shrink: 0;
-      border-radius: 50%;
-      background: rgba(154,132,50,0.12);
-      border: 1px solid rgba(154,132,50,0.30);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .conf-head-text {
-      font-size: 10px; font-weight: 700;
-      letter-spacing: 2.2px; text-transform: uppercase;
-      color: #d4ac47; line-height: 1.3;
-    }
-    .conf-head-sub {
-      font-size: 9.5px; letter-spacing: 0.5px;
-      color: rgba(212,172,71,0.55); text-transform: none;
-      font-weight: 400; margin-top: 1px;
-    }
-    .conf-body { padding: 16px 20px 20px; }
-    .conf-item {
-      display: flex; gap: 10px;
-      padding: 9px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    .conf-item:last-child { border-bottom: none; padding-bottom: 0; }
-    .conf-item-dot {
-      width: 4px; height: 4px; border-radius: 50%;
-      background: #9a8432; margin-top: 7px; flex-shrink: 0;
-    }
-    .conf-item p {
-      font-size: 11.5px; color: rgba(220,215,200,0.80);
-      line-height: 1.75; margin: 0;
-    }
-    .conf-item strong { color: rgba(212,172,71,0.90); font-weight: 600; }
-    .conf-item a { color: #d4ac47; text-decoration: none; border-bottom: 1px solid rgba(212,172,71,0.30); }
-    .conf-item a:hover { color: #fff; border-bottom-color: rgba(255,255,255,0.40); }
-    .conf-footer {
-      margin: 0 20px 16px;
-      padding: 10px 12px;
-      background: rgba(154,132,50,0.08);
-      border: 1px solid rgba(154,132,50,0.20);
-      font-size: 10px; letter-spacing: 0.3px;
-      color: rgba(212,172,71,0.65);
-      line-height: 1.6; text-align: center;
-    }
+.btn-gold .btn-spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
 
-    /* ── Form panel ── */
-    .form-panel {
-      background: var(--white);
-      border: 1px solid var(--border-lt);
-    }
-    .panel-head {
-      padding: 28px 36px 22px;
-      border-bottom: 1px solid var(--border-lt);
-    }
-    .panel-head-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 20px; font-weight: 500;
-      color: var(--text);
-      display: flex; align-items: center; gap: 12px;
-    }
-    .panel-head-title::before {
-      content: ''; width: 20px; height: 1.5px;
-      background: var(--gold); flex-shrink: 0;
-    }
-    .panel-body { padding: 32px 36px 36px; }
-    @media (max-width: 640px) {
-      .panel-head { padding: 20px 20px 16px; }
-      .panel-body { padding: 22px 20px 28px; }
-    }
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--nav);
+  color: white;
+  font-size: 11px;
+  padding: 8px 16px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 200;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
 
-    /* ── Form elements ── */
-    .fs { display: none; }
-    .fs.on { display: block; animation: fadeUp 0.35s cubic-bezier(.22,.68,0,1.1) both; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-    .row  { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-    .row1 { grid-template-columns: 1fr; }
-    @media (max-width: 560px) { .row { grid-template-columns: 1fr; } }
+.retry-bar {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: var(--danger);
+  padding: 11px 16px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+}
 
-    .f { display: flex; flex-direction: column; gap: 6px; }
-    .f label {
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 1px; text-transform: uppercase;
-      color: var(--text-mid);
-    }
-    .f label .r { color: var(--gold); }
+.retry-bar .btn-retry {
+  background: var(--danger);
+  color: white;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 12px;
+  flex-shrink: 0;
+}
 
-    .f input, .f select, .f textarea {
-      width: 100%;
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 0;
-      padding: 11px 14px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 14px; font-weight: 300;
-      color: var(--text);
-      transition: border-color .2s, box-shadow .2s;
-      -webkit-appearance: none; appearance: none;
-    }
-    .f input::placeholder { color: #bbb; font-size: 13px; }
-    .f textarea { min-height: 90px; resize: vertical; }
-    .f input:focus, .f select:focus, .f textarea:focus {
-      outline: none;
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(138,120,48,0.09);
-    }
-    .f select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a7830'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 13px center;
-      padding-right: 34px; cursor: pointer;
-    }
-    .f input.bad, .f select.bad { border-color: var(--danger); box-shadow: 0 0 0 3px rgba(185,28,28,0.07); }
+.retry-bar .btn-retry:hover {
+  background: #991b1b;
+}
 
-    /* prefix/suffix */
-    .pfx { position: relative; }
-    .pfx::before { content:'$'; position:absolute; left:13px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:14px; pointer-events:none; }
-    .pfx input { padding-left:26px; }
-    .sfx { position: relative; }
-    .sfx::after  { content:'%'; position:absolute; right:13px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:14px; pointer-events:none; }
-    .sfx input { padding-right:28px; }
-
-    /* ── NAICS ── */
-    .naics-sub { display:none; }
-    .naics-sub.on { display:flex; flex-direction:column; gap:6px; animation:fadeUp .3s ease; }
-    .naics-row2 { display:none; }
-    .naics-row2.on { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px; animation:fadeUp .3s ease; }
-    @media(max-width:560px){ .naics-row2.on { grid-template-columns:1fr; } }
-
-    /* section divider */
-    .sec-rule { height: 1px; background: var(--border-lt); margin: 28px 0; }
-
-    /* ── Checkbox grid ── */
-    .cb-head {
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 1px; text-transform: uppercase;
-      color: var(--text-mid); display: block; margin-bottom: 10px;
-    }
-    .cb-head span { font-size: 10px; color: var(--text-muted); letter-spacing: 0.3px; text-transform: none; font-weight: 400; }
-    .cb-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      border: 1px solid var(--border);
-      max-height: 232px; overflow-y: auto;
-    }
-    .cb-grid::-webkit-scrollbar { width: 4px; }
-    .cb-grid::-webkit-scrollbar-thumb { background: var(--border); }
-    @media(max-width:520px){ .cb-grid { grid-template-columns:1fr; } }
-    .cbi {
-      display: flex; align-items: center; gap: 10px;
-      padding: 9px 14px;
-      border-bottom: 1px solid var(--border-lt);
-      border-right: 1px solid var(--border-lt);
-      cursor: pointer;
-      transition: background .12s;
-      font-size: 12px; color: var(--text-mid); font-weight: 300;
-    }
-    .cbi:hover { background: rgba(138,120,48,0.04); }
-    .cbi input[type="checkbox"] { width:14px; height:14px; accent-color:var(--gold); cursor:pointer; flex-shrink:0; }
-
-    /* ── Error ── */
-    .ebar {
-      background: #fef2f2; border: 1px solid #fecaca;
-      color: var(--danger); padding: 11px 16px;
-      font-size: 13px; margin-bottom: 20px; display: none;
-    }
-
-    /* ── Buttons ── */
-    .brow { display:flex; gap:12px; margin-top:32px; padding-top:24px; border-top:1px solid var(--border-lt); }
-    .btn {
-      padding: 13px 32px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 12px; font-weight: 600;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      cursor: pointer; border: none; transition: all .25s ease;
-    }
-    .btn-gold {
-      background: var(--nav);
-      color: var(--white);
-      flex: 1;
-    }
-    .btn-gold:hover { background: var(--nav-dark); }
-    .btn-outline {
-      background: transparent;
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-    }
-    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-
-    /* ── Privacy note ── */
-    .pnote { font-size:11px; color:var(--text-muted); text-align:center; margin-top:18px; line-height:1.7; }
-    .pnote a { color:var(--gold); text-decoration:none; }
-    .pnote a:hover { text-decoration:underline; }
-
-    /* ── Loading ── */
-    .lscreen, .sscreen { display:none; flex-direction:column; align-items:center; justify-content:center; padding:56px 48px 64px; text-align:center; }
-    .lscreen.on, .sscreen.on { display:flex; }
-    .spin { width:44px; height:44px; border:2px solid var(--border); border-top-color:var(--gold); border-radius:50%; animation:spin 1s linear infinite; margin-bottom:22px; }
-    @keyframes spin { to { transform:rotate(360deg); } }
-    .lscreen p { font-family:'Cormorant Garamond',serif; font-size:18px; font-style:italic; color:var(--text-muted); }
-
-    /* ── Success ── */
-    .sscreen { background: var(--white); }
-    .smark-wrap { margin-bottom: 32px; display:flex; flex-direction:column; align-items:center; gap:0; }
-    .smark-ring {
-      width: 64px; height: 64px; border-radius: 50%;
-      border: 1px solid rgba(138,120,48,0.25);
-      background: rgba(138,120,48,0.04);
-      display: flex; align-items: center; justify-content: center;
-      position: relative;
-    }
-    .smark-ring::before {
-      content: '';
-      position: absolute; inset: -6px;
-      border-radius: 50%;
-      border: 1px solid rgba(138,120,48,0.12);
-    }
-    .sscreen-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 42px; font-weight: 300; font-style: italic;
-      color: var(--text); letter-spacing: -0.5px;
-      line-height: 1.1; margin-bottom: 6px;
-    }
-    .sscreen-sub {
-      font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
-      text-transform: uppercase; color: var(--gold);
-      margin-bottom: 28px;
-    }
-    .sscreen-divider {
-      width: 40px; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      margin: 0 auto 28px;
-    }
-    .sscreen p { font-size:13.5px; color:var(--text-mid); max-width:440px; line-height:2.0; margin-bottom:14px; }
-    .sscreen-items {
-      display: flex; flex-direction: column; gap: 0;
-      border: 1px solid var(--border-lt);
-      max-width: 400px; width: 100%;
-      margin: 24px auto 0;
-    }
-    .sscreen-item {
-      display: flex; align-items: flex-start; gap: 12px;
-      padding: 12px 18px;
-      border-bottom: 1px solid var(--border-lt);
-      font-size: 12px; color: var(--text-mid); line-height: 1.6;
-      text-align: left;
-    }
-    .sscreen-item:last-child { border-bottom: none; }
-    .sscreen-item-icon {
-      width: 18px; height: 18px; flex-shrink: 0;
-      border-radius: 50%;
-      background: rgba(138,120,48,0.08);
-      border: 1px solid rgba(138,120,48,0.20);
-      display: flex; align-items: center; justify-content: center;
-      margin-top: 1px;
-    }
-    .sbadge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--nav); color: rgba(255,255,255,0.85);
-      padding: 12px 24px; margin-top: 28px;
-      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-      font-weight: 600;
-    }
-    .sbadge-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--gold); flex-shrink: 0;
-      box-shadow: 0 0 0 3px rgba(138,120,48,0.25);
-    }
-
-    /* ── Footer ── */
-    .footer { text-align:center; padding:28px 0 0; font-size:11px; color:var(--text-muted); }
-    .footer a { color:var(--gold-lt); text-decoration:none; }
+.ebar.warn {
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  color: #92400e;
+}
   </style>
 </head>
 <body>
-
   <!-- Nav -->
   <nav class="nav">
-    <a class="nav-logo" href="https://www.aurumcapconnect.com/" target="_blank"><img src="data:image/png;base64,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" alt="Aurum Capital Connect" height="36" style="display:block; mix-blend-mode:screen;"></a>
+    <a class="nav-logo" href="https://www.aurumcapconnect.com/" target="_blank"><img src="https://static.wixstatic.com/media/cd4160_ed931eb6bd3f431e8df8328ed70d66b9~mv2.png" alt="Aurum Capital Connect" height="54" style="display:block;"></a>
     <a class="nav-link active" href="#">Valuations</a>
     <a class="nav-link" href="https://www.aurumcapconnect.com/services" target="_blank">M&amp;A Advisory</a>
     <a class="nav-link" href="https://www.aurumcapconnect.com/about" target="_blank">About</a>
     <div class="nav-spacer"></div>
   </nav>
-
   <div class="page">
-
-    <!-- Page title -->
     <h1 class="page-title">Request a <em>Complimentary<br>Business Valuation</em></h1>
     <p style="font-size:12px;color:#8a7830;font-weight:600;letter-spacing:0.5px;margin-bottom:28px;display:flex;align-items:center;gap:8px;">
       <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 11 12" fill="none" style="flex-shrink:0"><path d="M5.5 0.5L1 2.2v3.3c0 2.3 1.9 4.5 4.5 5.5 2.6-1 4.5-3.2 4.5-5.5V2.2L5.5 0.5z" stroke="#8a7830" stroke-width="1.1" fill="rgba(138,120,48,0.10)"/><path d="M3.5 5.8l1.3 1.3 2.7-2.7" stroke="#8a7830" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Licensed M&amp;A Advisory &nbsp;·&nbsp; Strictly Confidential &nbsp;·&nbsp; Non-Binding &nbsp;·&nbsp; No Obligation
+      Licensed M&amp;A Advisory &nbsp;&middot;&nbsp; Strictly Confidential &nbsp;&middot;&nbsp; Non-Binding &nbsp;&middot;&nbsp; No Obligation
     </p>
-
     <!-- Stepper -->
     <div class="stepper">
       <div class="step on" id="si1">
@@ -526,10 +327,8 @@
         <div class="step-label">Complete</div>
       </div>
     </div>
-
     <!-- Layout -->
     <div class="layout">
-
       <!-- Sidebar -->
       <div class="sidebar">
         <div class="sidebar-card">
@@ -545,11 +344,11 @@
         <div class="conf-card">
           <div class="conf-head">
             <div class="conf-head-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13" viewBox="0 0 11 12" fill="none"><path d="M5.5 0.5L1 2.2v3.3c0 2.3 1.9 4.5 4.5 5.5 2.6-1 4.5-3.2 4.5-5.5V2.2L5.5 0.5z" stroke="#d4ac47" stroke-width="1.1" fill="rgba(212,172,71,0.15)"/><path d="M3.5 5.8l1.3 1.3 2.7-2.7" stroke="#d4ac47" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13" viewBox="0 0 11 12" fill="none"><path d="M5.5 0.5L1 2.2v3.3c0 2.3 1.9 4.5 4.5 5.5 2.6-1 4.5-3.2 4.5-5.5V2.2L5.5 0.5z" stroke="#8a7830" stroke-width="1.1" fill="rgba(138,120,48,0.15)"/><path d="M3.5 5.8l1.3 1.3 2.7-2.7" stroke="#8a7830" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div>
               <div class="conf-head-text">Strict Confidentiality</div>
-              <div class="conf-head-sub">Licensed M&amp;A Advisory · FINRA Regulated</div>
+              <div class="conf-head-sub">Licensed M&amp;A Advisory &middot; FINRA Regulated</div>
             </div>
           </div>
           <div class="conf-body">
@@ -567,11 +366,10 @@
             </div>
           </div>
           <div class="conf-footer">
-            Aurum Capital Connect, LLC &nbsp;·&nbsp; Licensed M&amp;A Advisor &nbsp;·&nbsp; FINRA &amp; Securities Regulations
+            Aurum Capital Connect, LLC &nbsp;&middot;&nbsp; Licensed M&amp;A Advisor &nbsp;&middot;&nbsp; FINRA &amp; Securities Regulations
           </div>
         </div>
       </div>
-
       <!-- Main form -->
       <div class="form-panel">
         <div id="form-panel-head" class="panel-head">
@@ -579,13 +377,20 @@
         </div>
         <div class="panel-body">
           <div id="ebar" class="ebar"></div>
-
+          <div id="retry-bar" class="retry-bar" style="display:none;">
+            <span>Submission failed. Please try again.</span>
+            <button class="btn-retry" id="retry-btn">Retry Submission</button>
+          </div>
           <form id="vform" novalidate>
             <input type="hidden" name="source" value="Website">
             <input type="hidden" name="campaignId" value="">
             <input type="hidden" name="competitiveAdvantages" value="">
-
-            <!-- §1 CONTACT -->
+            <!-- Honeypot field for bot protection -->
+            <div class="honeypot" aria-hidden="true">
+              <label>Company URL</label>
+              <input type="text" name="company_url" tabindex="-1" autocomplete="off">
+            </div>
+            <!-- S1 CONTACT -->
             <div class="fs on" data-sec="1">
               <div class="row">
                 <div class="f"><label>Business Name <span class="r">*</span></label><input type="text" name="businessName" required placeholder="Acme Holdings, Inc."></div>
@@ -596,19 +401,18 @@
                 <div class="f"><label>Phone Number</label><input type="tel" name="phone" placeholder="(555) 123-4567"></div>
               </div>
               <div class="row row1">
-                <div class="f"><label>Company Website</label><input type="url" name="website" placeholder="https://www.yourcompany.com"></div>
+                <div class="f"><label>Company Website <span class="r">*</span></label><input type="url" name="website" required placeholder="https://www.yourcompany.com"></div>
               </div>
               <div class="brow">
-                <button type="button" class="btn btn-gold" onclick="goNext()">Continue &#8594;</button>
+                <button type="button" class="btn btn-gold" data-action="next">Continue &#8594;</button>
               </div>
             </div>
-
-            <!-- §2 BUSINESS -->
+            <!-- S2 BUSINESS -->
             <div class="fs" data-sec="2">
               <div class="row" style="margin-bottom:20px;">
                 <div class="f">
                   <label>Primary Industry Sector <span class="r">*</span></label>
-                  <select id="nsec" name="industrySector" required onchange="doSub()">
+                  <select id="nsec" name="industrySector" required>
                     <option value="">Select primary sector</option>
                     <option value="11">11 &#8212; Agriculture, Forestry, Fishing &amp; Hunting</option>
                     <option value="21">21 &#8212; Mining, Quarrying &amp; Oil/Gas Extraction</option>
@@ -634,7 +438,7 @@
                 </div>
                 <div class="naics-sub f" id="nsubwrap">
                   <label>Industry Subsector</label>
-                  <select id="nsub" name="industrySubsector" onchange="doGrp()">
+                  <select id="nsub" name="industrySubsector">
                     <option value="">Select subsector</option>
                   </select>
                 </div>
@@ -643,7 +447,6 @@
                 <div class="f"><label>Industry Group</label><select id="ngrp" name="industryGroup"><option value="">Select industry group</option></select></div>
                 <div class="f"><label>Additional Specialization</label><input type="text" name="subIndustry" placeholder="e.g., SaaS, Medical Devices, HVAC"></div>
               </div>
-
               <div class="row">
                 <div class="f"><label>Business Structure</label><select name="businessType"><option value="LLC">LLC</option><option value="S-Corp">S-Corporation</option><option value="C-Corp">C-Corporation</option><option value="Partnership">Partnership</option><option value="Sole Proprietorship">Sole Proprietorship</option><option value="Other">Other</option></select></div>
                 <div class="f"><label>Years in Business <span class="r">*</span></label><input type="number" name="yearsInBusiness" required min="0" placeholder="e.g., 12"></div>
@@ -652,27 +455,50 @@
                 <div class="f"><label>Number of Employees</label><input type="number" name="numberOfEmployees" min="0" placeholder="e.g., 45"></div>
                 <div class="f"><label>Headquarters (City, State)</label><input type="text" name="location" placeholder="Denver, CO"></div>
               </div>
+              <div class="sec-rule"></div>
+              <div class="row">
+                <div class="f">
+                  <label>What best describes your revenue mix? <span class="r">*</span></label>
+                  <select id="revMix" name="revenueMix" required>
+                    <option value="">Select your industry above first</option>
+                  </select>
+                  <div class="revmix-hint" id="revMixHint"></div>
+                </div>
+                <div class="f">
+                  <label>Who are your primary customers? <span class="r">*</span></label>
+                  <select name="primaryEndMarket" required>
+                    <option value="">Select primary end market</option>
+                    <option value="federal-defense">Federal / Defense Government</option>
+                    <option value="healthcare">Healthcare / Life Sciences</option>
+                    <option value="technology">Technology / Data Centers</option>
+                    <option value="commercial">Commercial / Municipal</option>
+                    <option value="diversified">Diversified</option>
+                    <option value="industrial">Industrial / Manufacturing</option>
+                    <option value="residential">Residential</option>
+                    <option value="oil-gas">Oil &amp; Gas / Energy / Midstream</option>
+                  </select>
+                </div>
+              </div>
               <div class="row row1">
                 <div class="f"><label>Brief Business Description</label><textarea name="businessDescription" placeholder="Describe your core products or services and the markets you serve..."></textarea></div>
               </div>
               <div class="brow">
-                <button type="button" class="btn btn-outline" onclick="goPrev()">&#8592; Back</button>
-                <button type="button" class="btn btn-gold" onclick="goNext()">Continue &#8594;</button>
+                <button type="button" class="btn btn-outline" data-action="prev">&#8592; Back</button>
+                <button type="button" class="btn btn-gold" data-action="next">Continue &#8594;</button>
               </div>
             </div>
-
-            <!-- §3 FINANCIALS -->
+            <!-- S3 FINANCIALS -->
             <div class="fs" data-sec="3">
               <div class="row">
-                <div class="f"><label>Annual Revenue <span class="r">*</span></label><div class="pfx"><input type="text" name="annualRevenue" required placeholder="1,000,000.00" oninput="fmtC(this)" onblur="finC(this)"></div></div>
-                <div class="f"><label>Annual EBITDA / Profit</label><div class="pfx"><input type="text" name="annualProfit" placeholder="150,000.00" oninput="fmtC(this)" onblur="finC(this)"></div></div>
+                <div class="f"><label>Annual Revenue <span class="r">*</span></label><div class="pfx"><input type="text" name="annualRevenue" required placeholder="1,000,000.00" data-fmt="currency"></div></div>
+                <div class="f"><label>Annual EBITDA / Profit</label><div class="pfx"><input type="text" name="annualProfit" placeholder="150,000.00" data-fmt="currency"></div></div>
               </div>
               <div class="row">
                 <div class="f"><label>Annual Revenue Growth Rate (YoY)</label><div class="sfx"><input type="number" name="revenueGrowthRate" step="0.1" min="-100" max="1000" placeholder="15.0"></div></div>
-                <div class="f"><label>Total Balance Sheet Assets</label><div class="pfx"><input type="text" name="totalAssets" placeholder="500,000.00" oninput="fmtC(this)" onblur="finC(this)"></div></div>
+                <div class="f"><label>Total Balance Sheet Assets</label><div class="pfx"><input type="text" name="totalAssets" placeholder="500,000.00" data-fmt="currency"></div></div>
               </div>
               <div class="row">
-                <div class="f"><label>Total Balance Sheet Liabilities</label><div class="pfx"><input type="text" name="totalLiabilities" placeholder="100,000.00" oninput="fmtC(this)" onblur="finC(this)"></div></div>
+                <div class="f"><label>Total Balance Sheet Liabilities</label><div class="pfx"><input type="text" name="totalLiabilities" placeholder="100,000.00" data-fmt="currency"></div></div>
                 <div class="f"><label>Reason for Valuation</label>
                   <select name="valuationReason">
                     <option value="General Interest">General Interest</option>
@@ -698,11 +524,19 @@
                     <option value="Immediate">Immediate Need</option>
                   </select>
                 </div>
-                <div class="f"><!-- spacer --></div>
+                <div class="f">
+                  <label>Top 5 Customer Revenue Share <span class="r">*</span></label>
+                  <select name="customerConcentration" required>
+                    <option value="">Select concentration level</option>
+                    <option value="under-20">Less than 20%</option>
+                    <option value="20-35">20% – 35%</option>
+                    <option value="36-50">36% – 50%</option>
+                    <option value="51-70">51% – 70%</option>
+                    <option value="over-70">Greater than 70%</option>
+                  </select>
+                </div>
               </div>
-
               <div class="sec-rule"></div>
-
               <div class="row row1" style="margin-bottom:20px;">
                 <div>
                   <span class="cb-head">Key Competitive Advantages <span>(select all that apply)</span></span>
@@ -726,29 +560,31 @@
                   </div>
                 </div>
               </div>
-
               <div class="row row1">
                 <div class="f"><label>Additional Comments / Questions</label><textarea name="additionalNotes" placeholder="Share anything else that might help us provide a more accurate valuation..."></textarea></div>
               </div>
-
-              <div class="brow">
-                <button type="button" class="btn btn-outline" onclick="goPrev()">&#8592; Back</button>
-                <button type="submit" class="btn btn-gold">Submit Valuation Request</button>
-              </div>
               <div class="pnote" style="background:#f8f7f4;border:1px solid #e5e2da;border-left:3px solid #8a7830;padding:14px 16px;text-align:left;margin-top:20px;font-size:12px;line-height:1.85;color:#555;">
-                <strong style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8a7830;">Confidentiality &amp; Advisor Disclosure</strong><br>
-                By submitting this form, you acknowledge that Aurum Capital Connect, LLC is a <strong>licensed M&amp;A advisory firm</strong> and that all information provided is strictly confidential. Your details will not be disclosed to any buyer, investor, or third party without your <strong>explicit written consent</strong>. This submission is <strong>entirely non-binding</strong> and does not constitute a sell-side mandate, listing, or engagement agreement. Aurum Capital Connect operates with full professional discretion in accordance with our <a href="https://www.aurumcapconnect.com/privacy" target="_blank">Privacy Policy</a> and applicable FINRA and securities regulations.
+                <strong style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8a7830;">Important Disclaimer &amp; Confidentiality Notice</strong><br>
+                By submitting this form, you acknowledge that Aurum Capital Connect, LLC is a <strong>licensed M&amp;A advisory firm</strong> and that all information provided is strictly confidential. Your details will not be disclosed to any buyer, investor, or third party without your <strong>explicit written consent</strong>. This submission is <strong>entirely non-binding</strong> and does not constitute a sell-side mandate, listing, or engagement agreement.<br><br>
+                <strong>No Representation of Accuracy.</strong> Aurum Capital Connect makes no representation or warranty, express or implied, as to the accuracy, completeness, or reliability of the valuation estimate provided. The valuation is prepared for <strong>discussion purposes only</strong> and should not be relied upon for any investment, transactional, financial, or legal decision without further independent analysis, due diligence, and consultation with qualified professional advisors.<br><br>
+                <strong>Prohibited Use.</strong> The unauthorized redistribution, reproduction, disclosure, or reliance upon the valuation report or any of its contents by any party other than the intended recipient is <strong>strictly prohibited</strong> without the prior written authorization of Aurum Capital Connect, LLC.<br><br>
+                Aurum Capital Connect operates with full professional discretion in accordance with our <a href="https://www.aurumcapconnect.com/privacy" target="_blank">Privacy Policy</a> and applicable FINRA and securities regulations.
+              </div>
+              <label class="ack-wrap" id="ack-wrap">
+                <input type="checkbox" id="ack-check">
+                <span>I have read and agree to the <strong>Important Disclaimer &amp; Confidentiality Notice</strong> above. I understand that this valuation is provided for <strong>discussion purposes only</strong>, that Aurum Capital Connect makes no representation as to its accuracy, and that it should not be relied upon without further independent analysis. I further acknowledge that unauthorized redistribution, disclosure, or reliance upon the valuation report without written authorization is strictly prohibited. My information will be held in strict confidence in accordance with Aurum Capital Connect&#8217;s <a href="https://www.aurumcapconnect.com/privacy" target="_blank">Privacy Policy</a> and applicable regulations.</span>
+              </label>
+              <div class="brow">
+                <button type="button" class="btn btn-outline" data-action="prev">&#8592; Back</button>
+                <button type="submit" class="btn btn-gold" id="submit-btn">Submit Valuation Request</button>
               </div>
             </div>
-
           </form>
-
           <!-- Loading -->
           <div class="lscreen" id="ls">
             <div class="spin"></div>
             <p>Preparing your valuation report&#8230;</p>
           </div>
-
           <!-- Step 4: Success -->
           <div class="fs" data-sec="4" id="ss-wrap">
           <div class="sscreen on" id="ss">
@@ -786,33 +622,276 @@
                 <div class="sscreen-item-icon">
                   <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#8a7830" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
-                <span>All information held in strictest confidence — never shared without consent</span>
+                <span>All information held in strictest confidence &#8212; never shared without consent</span>
               </div>
             </div>
             <div class="sbadge">
               <div class="sbadge-dot"></div>
-              Aurum Capital Connect · Licensed M&amp;A Advisory
+              Aurum Capital Connect &middot; Licensed M&amp;A Advisory
             </div>
           </div>
-          </div><!-- /fs step 4 -->
+          </div>
         </div>
       </div>
-
-    </div><!-- /layout -->
-
-    <div class="footer">
-      <p>&#169; 2025 Aurum Capital Connect &nbsp;&middot;&nbsp; Denver &amp; Dallas &nbsp;&middot;&nbsp; <a href="https://www.aurumcapconnect.com" target="_blank">www.aurumcapconnect.com</a></p>
     </div>
   </div>
-
+  <!-- Footer -->
+  <div class="site-footer">
+    <div class="footer-strip">
+      <img class="footer-img" src="https://static.wixstatic.com/media/bd8f3e_e3fbc154b4454270b60012ce79d6ab7c~mv2.jpg/v1/fill/w_440,h_310,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/bd8f3e_e3fbc154b4454270b60012ce79d6ab7c~mv2.jpg" alt="Denver Union Station">
+      <div class="footer-center">
+        <img class="footer-logo" src="https://static.wixstatic.com/media/bd8f3e_7611671c419a458f95c3389d3bc0613a~mv2.png/v1/fill/w_158,h_108,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/AURUM-ICON-COLOR.png" alt="Aurum Capital Connect">
+        <div class="footer-offices">
+          <div class="footer-office">
+            <div class="footer-office-addr">101 Fillmore Street, 16th Floor<br>Denver, Colorado 80206</div>
+            <div class="footer-office-phone"><a href="tel:+17202799881">(720) 279-9881</a></div>
+            <div class="footer-office-email"><a href="mailto:info@aurumcapconnect.com">info@aurumcapconnect.com</a></div>
+          </div>
+          <div class="footer-sep"></div>
+          <div class="footer-office">
+            <div class="footer-office-addr">4633 N. Central Expwy, Ste 360<br>Dallas, Texas 75206</div>
+            <div class="footer-office-phone"><a href="tel:+17202799881">(720) 279-9881</a></div>
+            <div class="footer-office-email"><a href="mailto:info@aurumcapconnect.com">info@aurumcapconnect.com</a></div>
+          </div>
+        </div>
+      </div>
+      <img class="footer-img mobile-hide" src="https://static.wixstatic.com/media/bd8f3e_498097a74a5748499cbab877f16195d8~mv2.png/v1/fill/w_440,h_310,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bd8f3e_498097a74a5748499cbab877f16195d8~mv2.png" alt="Dallas Skyline">
+    </div>
+  </div>
+  <div class="footer-compliance">
+    <div class="footer-compliance-inner">
+      <a href="https://www.finra.org/" target="_blank" rel="noopener"><img src="https://static.wixstatic.com/media/bd8f3e_3196a2bcf0dd44b69c3093aa7e6dbf3c~mv2.png/v1/fill/w_104,h_38,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/FINRA_Logo_Web_Rev.png" alt="FINRA"></a>
+      <img src="https://static.wixstatic.com/media/cd4160_7e1d992b73b740598b6c23839d95c6de~mv2.png/v1/fill/w_92,h_38,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/sipc.png" alt="SIPC">
+      <img src="https://static.wixstatic.com/media/cd4160_3def9d642f5f48058f93ee000234b131~mv2.png/v1/fill/w_216,h_50,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Daco_6119650.png" alt="BrokerCheck">
+      <img src="https://static.wixstatic.com/media/cd4160_1ed49033a032443e8cb69c9358fef55b~mv2.png/v1/fill/w_208,h_64,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/IIB%20Logo.png" alt="Independent Investment Bankers">
+    </div>
+  </div>
+  <div class="footer-disclosure">
+    <div class="footer-disclosure-inner">
+      Investment Banking Services and Securities offered through Independent Investment Bankers Corp., a broker-dealer, Member <a href="https://www.finra.org/" target="_blank" rel="noopener">FINRA</a>/<a href="https://www.sipc.org/" target="_blank" rel="noopener">SIPC</a>. Aurum Capital Connect is not affiliated with Independent Investment Bankers Corp.
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <p>&copy; 2025 Aurum Capital Connect, LLC &middot; All Rights Reserved &nbsp;&middot;&nbsp; <a href="https://www.aurumcapconnect.com/privacy" target="_blank">Privacy Policy</a> &amp; <a href="https://www.aurumcapconnect.com" target="_blank">Terms of Service</a></p>
+  </div>
+  <!-- Auto-save toast -->
+  <div class="toast" id="save-toast">Draft saved</div>
 <script>
-const WEBHOOK = 'https://stephenlapham01.app.n8n.cloud/webhook/business-valuation';
+const WEBHOOK = 'https://stephenlapham01.app.n8n.cloud/webhook/331f48d4-edcc-4b9b-9712-2dd2adaed86b';
 let cur = 1;
+const PAGE_LOAD_TIME = Date.now();
 const up = new URLSearchParams(location.search);
-document.querySelector('[name=campaignId]').value = up.get('campaign')||up.get('utm_campaign')||'';
-document.querySelector('[name=source]').value = up.get('source')||up.get('utm_source')||'Website';
-
 const TITLES = ['Contact Information','Business Details','Financial Information','Submission Complete'];
+
+const REVENUE_MIX = {
+  "11": {
+    hint: "Characterize how your agricultural revenue is generated",
+    opts: [
+      {v:"commodity-sales", l:">70% Commodity / Crop / Livestock Sales"},
+      {v:"contract-farming", l:">70% Contract Farming & Forward Agreements"},
+      {v:"ag-services", l:">70% Agricultural Services (Custom Harvesting, Spraying, etc.)"},
+      {v:"mixed-ag", l:"Mixed — Crop Sales, Livestock & Service Revenue"},
+      {v:"value-added-ag", l:">70% Value-Added Processing (Packaged, Organic, Direct-to-Consumer)"}
+    ]
+  },
+  "21": {
+    hint: "Characterize how your extraction/mining revenue is generated",
+    opts: [
+      {v:"production-extraction", l:">70% Production & Extraction Sales"},
+      {v:"royalties-licensing", l:">70% Royalties, Mineral Rights & Licensing"},
+      {v:"oilfield-services", l:">70% Oilfield / Mining Services & Support"},
+      {v:"midstream-transport", l:">70% Midstream / Transportation & Processing Fees"},
+      {v:"mixed-extraction", l:"Mixed — Production, Services & Royalties"}
+    ]
+  },
+  "22": {
+    hint: "Characterize how your utility revenue is generated",
+    opts: [
+      {v:"regulated-rate", l:">70% Regulated Rate-Base Revenue"},
+      {v:"unregulated-market", l:">70% Unregulated / Merchant Market Sales"},
+      {v:"infrastructure-fees", l:">70% Infrastructure & Capacity Fees"},
+      {v:"renewable-ppa", l:">70% Renewable Energy PPAs & RECs"},
+      {v:"mixed-utility", l:"Mixed — Regulated, Merchant & Fee-Based"}
+    ]
+  },
+  "23": {
+    hint: "Characterize how your construction revenue is generated",
+    opts: [
+      {v:"recurring-service", l:">70% Recurring Service / Maintenance Contracts"},
+      {v:"mixed-project-service", l:"30–70% Mixed Project & Service Revenue"},
+      {v:"new-construction", l:">70% New Construction / Project-Based"},
+      {v:"design-build", l:">70% Design-Build / Turnkey Contracts"},
+      {v:"government-contracts", l:">70% Government / Municipal Contracts"},
+      {v:"subcontractor", l:">70% Subcontractor Revenue (Work for GCs)"}
+    ]
+  },
+  "31-33": {
+    hint: "Characterize how your manufacturing revenue is generated",
+    opts: [
+      {v:"oem-contract", l:">70% OEM / Contract Manufacturing"},
+      {v:"branded-direct", l:">70% Branded / Direct Product Sales"},
+      {v:"private-label", l:">70% Private Label / White Label"},
+      {v:"aftermarket-parts", l:">70% Aftermarket Parts, Service & MRO"},
+      {v:"mixed-mfg", l:"Mixed — OEM, Branded & Aftermarket"},
+      {v:"licensing-ip", l:">70% Licensing & Intellectual Property Revenue"}
+    ]
+  },
+  "42": {
+    hint: "Characterize how your wholesale/distribution revenue is generated",
+    opts: [
+      {v:"distribution-resale", l:">70% Distribution / Resale (Pass-Through Margins)"},
+      {v:"value-added-dist", l:">70% Value-Added Distribution (Kitting, Assembly, Custom)"},
+      {v:"private-label-wholesale", l:">70% Private Label / Proprietary Product Sales"},
+      {v:"drop-ship-marketplace", l:">70% Drop-Ship / Marketplace / Brokerage"},
+      {v:"mixed-wholesale", l:"Mixed — Distribution, Value-Added & Proprietary"}
+    ]
+  },
+  "44-45": {
+    hint: "Characterize how your retail revenue is generated",
+    opts: [
+      {v:"brick-mortar", l:">70% Brick-and-Mortar / In-Store Sales"},
+      {v:"ecommerce-dtc", l:">70% E-Commerce / Direct-to-Consumer Online"},
+      {v:"omnichannel", l:"Omnichannel — Balanced In-Store & Online"},
+      {v:"subscription-membership", l:">70% Subscription / Membership / Auto-Ship"},
+      {v:"franchise-retail", l:">70% Franchise / Licensing Revenue"},
+      {v:"mixed-retail", l:"Mixed — Retail, Wholesale & Online"}
+    ]
+  },
+  "48-49": {
+    hint: "Characterize how your transportation/logistics revenue is generated",
+    opts: [
+      {v:"contract-dedicated", l:">70% Contract / Dedicated Route Revenue"},
+      {v:"spot-on-demand", l:">70% Spot Market / On-Demand Freight"},
+      {v:"brokerage-3pl", l:">70% Brokerage / 3PL / Asset-Light Fees"},
+      {v:"last-mile-delivery", l:">70% Last-Mile / Final-Mile Delivery"},
+      {v:"warehousing-storage", l:">70% Warehousing, Storage & Fulfillment Fees"},
+      {v:"mixed-transport", l:"Mixed — Contract, Spot & Brokerage"}
+    ]
+  },
+  "51": {
+    hint: "Characterize how your information/technology revenue is generated",
+    opts: [
+      {v:"saas-subscription", l:">70% SaaS / Recurring Subscription Revenue"},
+      {v:"perpetual-licensing", l:">70% Perpetual Licensing / On-Premise Software"},
+      {v:"advertising-media", l:">70% Advertising & Media Revenue"},
+      {v:"data-analytics", l:">70% Data Licensing / Analytics-as-a-Service"},
+      {v:"transactional-usage", l:">70% Transactional / Usage-Based (API Calls, Per-Seat)"},
+      {v:"mixed-info", l:"Mixed — SaaS, Licensing, Advertising & Services"}
+    ]
+  },
+  "52": {
+    hint: "Characterize how your financial services revenue is generated",
+    opts: [
+      {v:"fee-advisory", l:">70% Fee-Based / Advisory & AUM Revenue"},
+      {v:"interest-spread", l:">70% Net Interest Income / Spread Revenue"},
+      {v:"premium-underwriting", l:">70% Premium & Underwriting Income"},
+      {v:"commission-transaction", l:">70% Commission & Transaction-Based Fees"},
+      {v:"origination-servicing", l:">70% Loan Origination & Servicing Fees"},
+      {v:"mixed-financial", l:"Mixed — Fees, Interest, Premiums & Commissions"}
+    ]
+  },
+  "53": {
+    hint: "Characterize how your real estate revenue is generated",
+    opts: [
+      {v:"lease-rental", l:">70% Lease / Rental Income (NNN, Gross, Modified)"},
+      {v:"brokerage-transaction", l:">70% Transaction & Brokerage Commissions"},
+      {v:"property-development", l:">70% Development / Build-to-Sell Revenue"},
+      {v:"property-management", l:">70% Property Management & HOA Fees"},
+      {v:"cam-ancillary", l:">70% CAM Reimbursements & Ancillary Income"},
+      {v:"mixed-re", l:"Mixed — Leasing, Brokerage, Management & Development"}
+    ]
+  },
+  "54": {
+    hint: "Characterize how your professional services revenue is generated",
+    opts: [
+      {v:"retainer-recurring", l:">70% Recurring Retainers & Managed Services"},
+      {v:"project-engagement", l:">70% Project / Engagement-Based (Fixed Fee or T&M)"},
+      {v:"staff-augmentation", l:">70% Staff Augmentation & Resource Placement"},
+      {v:"outcome-contingency", l:">70% Outcome-Based / Contingency / Success Fees"},
+      {v:"mixed-professional", l:"30–70% Mixed Retainer & Project Revenue"},
+      {v:"licensing-royalty-pro", l:">70% IP Licensing, Royalties & Technology Fees"}
+    ]
+  },
+  "55": {
+    hint: "Characterize how your management company revenue is generated",
+    opts: [
+      {v:"management-fees", l:">70% Intercompany Management & Advisory Fees"},
+      {v:"dividend-investment", l:">70% Dividend & Investment Income from Subsidiaries"},
+      {v:"shared-services", l:">70% Shared Services Allocation Revenue"},
+      {v:"mixed-holdco", l:"Mixed — Management Fees, Dividends & Shared Services"}
+    ]
+  },
+  "56": {
+    hint: "Characterize how your admin/support/waste revenue is generated",
+    opts: [
+      {v:"recurring-service-contracts", l:">70% Recurring Service Contracts (Janitorial, Security, Waste)"},
+      {v:"staffing-placement", l:">70% Staffing, Temp Placement & Payroll Services"},
+      {v:"project-remediation", l:">70% Project-Based / Remediation & Cleanup"},
+      {v:"route-based", l:">70% Route-Based / Collection & Hauling Revenue"},
+      {v:"mixed-admin", l:"Mixed — Recurring Contracts, Staffing & Project Work"}
+    ]
+  },
+  "61": {
+    hint: "Characterize how your education revenue is generated",
+    opts: [
+      {v:"tuition-enrollment", l:">70% Tuition & Enrollment Revenue"},
+      {v:"government-grants", l:">70% Government Funding, Grants & Title IV"},
+      {v:"corporate-training", l:">70% Corporate Training & B2B Contracts"},
+      {v:"online-course", l:">70% Online / Digital Course & Certification Sales"},
+      {v:"mixed-education", l:"Mixed — Tuition, Grants, Corporate & Online"}
+    ]
+  },
+  "62": {
+    hint: "Characterize how your healthcare revenue is generated",
+    opts: [
+      {v:"insurance-reimburse", l:">70% Commercial Insurance Reimbursement"},
+      {v:"government-payer", l:">70% Government Payer (Medicare / Medicaid)"},
+      {v:"self-pay-cash", l:">70% Self-Pay / Cash-Based / Concierge"},
+      {v:"capitated-vbc", l:">70% Capitated / Value-Based Care Contracts"},
+      {v:"mixed-payer", l:"Mixed Payer — Commercial, Government & Self-Pay"},
+      {v:"managed-care-contracts", l:">70% Managed Care Organization Contracts"}
+    ]
+  },
+  "71": {
+    hint: "Characterize how your entertainment/recreation revenue is generated",
+    opts: [
+      {v:"ticket-admission", l:">70% Ticket Sales / Gate Admission & Events"},
+      {v:"membership-pass", l:">70% Membership, Season Pass & Subscription Revenue"},
+      {v:"sponsorship-licensing", l:">70% Sponsorship, Licensing & Media Rights"},
+      {v:"food-bev-merch", l:">70% Ancillary — F&B, Merchandise & Concessions"},
+      {v:"mixed-entertainment", l:"Mixed — Ticketing, Memberships, Sponsorships & Ancillary"}
+    ]
+  },
+  "72": {
+    hint: "Characterize how your hospitality revenue is generated",
+    opts: [
+      {v:"room-lodging", l:">70% Room Revenue / Lodging (ADR & RevPAR Driven)"},
+      {v:"food-beverage", l:">70% Food & Beverage (Restaurant, Catering, Banquet)"},
+      {v:"franchise-mgmt-fee", l:">70% Franchise / Management Fee Revenue"},
+      {v:"events-group", l:">70% Events, Group Sales & Meeting Revenue"},
+      {v:"mixed-hospitality", l:"Mixed — Rooms, F&B, Events & Ancillary"}
+    ]
+  },
+  "81": {
+    hint: "Characterize how your service business revenue is generated",
+    opts: [
+      {v:"recurring-maintenance", l:">70% Recurring Maintenance & Service Agreements"},
+      {v:"on-demand-walkin", l:">70% On-Demand / Walk-In / Appointment-Based"},
+      {v:"parts-product-resale", l:">70% Parts & Product Resale (Attached to Service)"},
+      {v:"membership-dues", l:">70% Membership Dues & Annual Fees"},
+      {v:"mixed-other-services", l:"Mixed — Recurring, On-Demand & Product Revenue"}
+    ]
+  },
+  "92": {
+    hint: "Characterize how your government entity revenue is generated",
+    opts: [
+      {v:"tax-fee", l:">70% Tax & Fee Revenue"},
+      {v:"grant-funded", l:">70% Grant / Federal & State Funded"},
+      {v:"enterprise-fund", l:">70% Enterprise Fund / Utility Fee Revenue"},
+      {v:"mixed-government", l:"Mixed — Tax, Grant & Enterprise Revenue"}
+    ]
+  }
+};
 
 const NT = {
   "11":{s:[{c:"111",l:"111 — Crop Production"},{c:"112",l:"112 — Animal Production & Aquaculture"},{c:"113",l:"113 — Forestry & Logging"},{c:"114",l:"114 — Fishing, Hunting & Trapping"},{c:"115",l:"115 — Agriculture & Forestry Support"}],g:{"111":[{c:"1111",l:"1111 — Oilseed & Grain Farming"},{c:"1112",l:"1112 — Vegetable & Melon Farming"},{c:"1113",l:"1113 — Fruit & Tree Nut Farming"},{c:"1114",l:"1114 — Greenhouse, Nursery & Floriculture"},{c:"1119",l:"1119 — Other Crop Farming"}],"112":[{c:"1121",l:"1121 — Cattle Ranching & Farming"},{c:"1122",l:"1122 — Hog & Pig Farming"},{c:"1123",l:"1123 — Poultry & Egg Production"},{c:"1124",l:"1124 — Sheep & Goat Farming"},{c:"1125",l:"1125 — Aquaculture"},{c:"1129",l:"1129 — Other Animal Production"}]}},
@@ -837,52 +916,157 @@ const NT = {
   "92":{s:[{c:"921",l:"921 — Executive, Legislative & Other Government"},{c:"922",l:"922 — Justice, Public Order & Safety"},{c:"923",l:"923 — Human Resource Programs"},{c:"924",l:"924 — Environment & Conservation Programs"},{c:"925",l:"925 — Community & Housing Programs"},{c:"926",l:"926 — Economic Programs Administration"},{c:"928",l:"928 — National Security & International Affairs"}],g:{}}
 };
 
+const DISPOSABLE_DOMAINS = new Set([
+  'mailinator.com','guerrillamail.com','tempmail.com','throwaway.email','yopmail.com',
+  'sharklasers.com','guerrillamailblock.com','grr.la','dispostable.com','maildrop.cc',
+  'mailnesia.com','tempail.com','tempr.email','discard.email','trashmail.com',
+  'trashmail.net','trashmail.org','fakeinbox.com','tempinbox.com','temp-mail.org',
+  'getnada.com','emailondeck.com','33mail.com','mailcatch.com','mintemail.com',
+  'mohmal.com','burnermail.io','inboxbear.com','mailsac.com','harakirimail.com',
+  'tmail.com','10minutemail.com','10minute.email','guerrillamail.info','spam4.me',
+  'mytemp.email','disposableemailaddresses.emailmiser.com','mailforspam.com',
+  'safetymail.info','trashymail.com','filzmail.com','mailexpire.com','tempmailaddress.com',
+  'emailfake.com','crazymailing.com','mailnator.com','anonbox.net','jetable.org'
+]);
+
+const ROLE_PREFIXES = new Set([
+  'test','info','admin','support','noreply','no-reply','sales','help','contact',
+  'webmaster','postmaster','abuse','spam','fake','none','null','temp','demo',
+  'example','sample','asdf','qwerty','aaa','bbb','xxx','zzz','nobody'
+]);
+
+const DOMAIN_TYPOS = {
+  'gmial.com':'gmail.com','gmal.com':'gmail.com','gmai.com':'gmail.com',
+  'gamil.com':'gmail.com','gnail.com':'gmail.com','gmail.co':'gmail.com',
+  'gmail.con':'gmail.com','gmaill.com':'gmail.com','gmil.com':'gmail.com',
+  'gmaol.com':'gmail.com','gmali.com':'gmail.com','gmaik.com':'gmail.com',
+  'yahooo.com':'yahoo.com','yaho.com':'yahoo.com','yaoo.com':'yahoo.com',
+  'yahoo.co':'yahoo.com','yahoo.con':'yahoo.com',
+  'outloo.com':'outlook.com','outlok.com':'outlook.com','outlook.co':'outlook.com',
+  'hotmal.com':'hotmail.com','hotmial.com':'hotmail.com','hotmail.co':'hotmail.com',
+  'hotmail.con':'hotmail.com','hotmaill.com':'hotmail.com',
+  'icoud.com':'icloud.com','icloud.co':'icloud.com','icloude.com':'icloud.com',
+  'aol.co':'aol.com','aol.con':'aol.com'
+};
+
+function validateEmail(email){
+  var v = email.trim().toLowerCase();
+  if(!/^[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$/.test(v))
+    return {ok:false, msg:'Please enter a valid email address.'};
+  var parts = v.split('@');
+  var local = parts[0];
+  var domain = parts[1];
+  if(local.length < 2)
+    return {ok:false, msg:'Email address appears too short.'};
+  if(/^[.\-_]|[.\-_]$/.test(local))
+    return {ok:false, msg:'Email address format is invalid.'};
+  if(/\.{2,}|\-{2,}|_{2,}/.test(local))
+    return {ok:false, msg:'Email address format is invalid.'};
+  if(/^([a-z])\1{3,}/.test(local) || /^(asdf|qwerty|zxcv|1234)/.test(local))
+    return {ok:false, msg:'Please enter your real business email address.'};
+  var firstPart = local.split(/[.\-_+]/)[0];
+  if(ROLE_PREFIXES.has(firstPart))
+    return {ok:false, msg:'Please use a personal or business email, not a generic address (e.g., info@, test@).'};
+  if(DOMAIN_TYPOS[domain])
+    return {ok:false, msg:'Did you mean ' + local + '@' + DOMAIN_TYPOS[domain] + '?'};
+  if(DISPOSABLE_DOMAINS.has(domain))
+    return {ok:false, msg:'Temporary email addresses are not accepted. Please use your business email.'};
+  var tld = domain.split('.').pop();
+  if(tld.length < 2 || tld.length > 12)
+    return {ok:false, msg:'Please enter a valid email address.'};
+  return {ok:true, msg:''};
+}
+
+function doRevMix() {
+  var sv = document.getElementById('nsec').value;
+  var sel = document.getElementById('revMix');
+  var hint = document.getElementById('revMixHint');
+  sel.innerHTML = '';
+  hint.textContent = '';
+  sel.classList.remove('bad');
+  if (!sv || !REVENUE_MIX[sv]) {
+    sel.innerHTML = '<option value="">Select your industry above first</option>';
+    return;
+  }
+  var mix = REVENUE_MIX[sv];
+  sel.innerHTML = '<option value="">Select revenue mix</option>';
+  mix.opts.forEach(function(o) {
+    var opt = document.createElement('option');
+    opt.value = o.v;
+    opt.textContent = o.l;
+    sel.appendChild(opt);
+  });
+  hint.textContent = mix.hint;
+}
+
 function doSub(){
-  const sv=document.getElementById('nsec').value;
-  const sw=document.getElementById('nsubwrap'),ss=document.getElementById('nsub');
-  const gr=document.getElementById('ngrow'),gs=document.getElementById('ngrp');
+  var sv = document.getElementById('nsec').value;
+  var sw = document.getElementById('nsubwrap');
+  var ss = document.getElementById('nsub');
+  var gr = document.getElementById('ngrow');
+  var gs = document.getElementById('ngrp');
   ss.innerHTML='<option value="">Select subsector</option>';
   gs.innerHTML='<option value="">Select industry group</option>';
-  gr.classList.remove('on'); sw.classList.remove('on');
-  if(!sv||!NT[sv]) return;
-  NT[sv].s.forEach(x=>{const o=document.createElement('option');o.value=x.c;o.textContent=x.l;ss.appendChild(o);});
+  gr.classList.remove('on');
+  sw.classList.remove('on');
+  if(!sv || !NT[sv]) return;
+  NT[sv].s.forEach(function(x){
+    var o = document.createElement('option');
+    o.value = x.c;
+    o.textContent = x.l;
+    ss.appendChild(o);
+  });
   sw.classList.add('on');
+  doRevMix();
 }
+
 function doGrp(){
-  const sv=document.getElementById('nsec').value,ssv=document.getElementById('nsub').value;
-  const gr=document.getElementById('ngrow'),gs=document.getElementById('ngrp');
-  gs.innerHTML='<option value="">Select industry group</option>'; gr.classList.remove('on');
-  if(!sv||!ssv||!NT[sv]) return;
-  const g=(NT[sv].g||{})[ssv]; if(!g||!g.length) return;
-  g.forEach(x=>{const o=document.createElement('option');o.value=x.c;o.textContent=x.l;gs.appendChild(o);});
+  var sv = document.getElementById('nsec').value;
+  var ssv = document.getElementById('nsub').value;
+  var gr = document.getElementById('ngrow');
+  var gs = document.getElementById('ngrp');
+  gs.innerHTML='<option value="">Select industry group</option>';
+  gr.classList.remove('on');
+  if(!sv || !ssv || !NT[sv]) return;
+  var g = (NT[sv].g || {})[ssv];
+  if(!g || !g.length) return;
+  g.forEach(function(x){
+    var o = document.createElement('option');
+    o.value = x.c;
+    o.textContent = x.l;
+    gs.appendChild(o);
+  });
   gr.classList.add('on');
 }
 
 function fmtC(el){
-  let r=el.value.replace(/[^0-9.]/g,'');
-  const p=r.split('.');
-  if(p.length>2) r=p[0]+'.'+p.slice(1).join('');
-  const i=r.split('.')[0],d=r.split('.')[1];
-  el.value=i.replace(/\B(?=(\d{3})+(?!\d))/g,',')+(d!==undefined?'.'+d:'');
+  var r = el.value.replace(/[^0-9.]/g,'');
+  var p = r.split('.');
+  if(p.length > 2) r = p[0] + '.' + p.slice(1).join('');
+  var i = r.split('.')[0];
+  var d = r.split('.')[1];
+  el.value = i.replace(/\B(?=(\d{3})+(?!\d))/g,',') + (d !== undefined ? '.' + d : '');
 }
+
 function finC(el){
-  const n=parseFloat(el.value.replace(/,/g,''));
-  if(!isNaN(n)) el.value=n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  var n = parseFloat(el.value.replace(/,/g,''));
+  if(!isNaN(n)) el.value = n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 }
 
 function collectCB(){
-  const v=Array.from(document.querySelectorAll('#cbg input:checked')).map(c=>c.value);
-  document.querySelector('[name=competitiveAdvantages]').value=v.join('; ');
+  var v = Array.from(document.querySelectorAll('#cbg input:checked')).map(function(c){return c.value;});
+  document.querySelector('[name=competitiveAdvantages]').value = v.join('; ');
 }
 
 function upStepper(){
-  [1,2,3,4].forEach(n=>{
-    const c=document.getElementById('s'+n),it=document.getElementById('si'+n);
-    c.classList.remove('on','done'); it.classList.remove('on');
-    if(n<cur) c.classList.add('done');
-    else if(n===cur){
-      // Step 4 (Complete) shows filled/done when active, not just outlined
-      if(n===4){ c.classList.add('done'); } else { c.classList.add('on'); }
+  [1,2,3,4].forEach(function(n){
+    var c = document.getElementById('s'+n);
+    var it = document.getElementById('si'+n);
+    c.classList.remove('on','done');
+    it.classList.remove('on');
+    if(n < cur) c.classList.add('done');
+    else if(n === cur){
+      if(n === 4){ c.classList.add('done'); } else { c.classList.add('on'); }
       it.classList.add('on');
     }
   });
@@ -890,62 +1074,249 @@ function upStepper(){
 }
 
 function showSec(n){
-  document.querySelectorAll('.fs').forEach(s=>s.classList.remove('on'));
-  document.querySelector(`[data-sec="${n}"]`).classList.add('on');
-  cur=n; upStepper();
-  if(n===4){ document.getElementById('form-panel-head').style.display='none'; }
+  var prevStep = cur;
+  document.querySelectorAll('.fs').forEach(function(s){s.classList.remove('on');});
+  document.querySelector('[data-sec="'+n+'"]').classList.add('on');
+  cur = n;
+  upStepper();
+  if(n === 4){ document.getElementById('form-panel-head').style.display = 'none'; }
   document.querySelector('.form-panel').scrollIntoView({behavior:'smooth',block:'start'});
+  if(n > prevStep) { trackStep(n, TITLES[n-1]); }
 }
 
 function check(n){
-  const sec=document.querySelector(`[data-sec="${n}"]`);
-  let ok=true;
-  sec.querySelectorAll('[required]').forEach(f=>{
-    const v=f.value.trim()!=='';
-    f.classList.toggle('bad',!v); if(!v) ok=false;
+  var sec = document.querySelector('[data-sec="'+n+'"]');
+  var ok = true;
+  sec.querySelectorAll('[required]').forEach(function(f){
+    var v = f.value.trim() !== '';
+    f.classList.toggle('bad',!v);
+    if(!v) ok = false;
   });
-  if(n===1){
-    const em=sec.querySelector('[name=email]');
-    const ve=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value);
-    em.classList.toggle('bad',!ve); if(!ve) ok=false;
+  if(n === 1){
+    var em = sec.querySelector('[name=email]');
+    var result = validateEmail(em.value);
+    em.classList.toggle('bad',!result.ok);
+    if(!result.ok){ ok = false; if(result.msg) showErr(result.msg); }
+  }
+  if(n === 3){
+    var ack = document.getElementById('ack-check');
+    var wrap = document.getElementById('ack-wrap');
+    if(!ack.checked){
+      wrap.classList.add('bad');
+      ok = false;
+      showErr('Please read and accept the Important Disclaimer & Confidentiality Notice to continue.');
+    } else {
+      wrap.classList.remove('bad');
+    }
   }
   return ok;
 }
 
-function goNext(){ if(check(cur)) showSec(cur+1); else showErr('Please complete all required fields.'); }
-function goPrev(){ if(cur>1) showSec(cur-1); }
-
-function showErr(m){
-  const e=document.getElementById('ebar');
-  e.textContent=m; e.style.display='block';
-  setTimeout(()=>e.style.display='none',5000);
+function goNext(){
+  if(check(cur)){ showSec(cur+1); return; }
+  if(document.getElementById('ebar').style.display !== 'block')
+    showErr('Please complete all required fields.');
 }
 
-document.getElementById('vform').addEventListener('submit',async function(e){
-  e.preventDefault();
-  if(!check(cur)){showErr('Please complete all required fields.');return;}
-  collectCB();
-  const data=Object.fromEntries(new FormData(e.target).entries());
-  ['annualRevenue','annualProfit','totalAssets','totalLiabilities'].forEach(k=>{if(data[k])data[k]=data[k].replace(/,/g,'');});
-  document.querySelectorAll('.fs').forEach(s=>s.classList.remove('on'));
-  document.getElementById('form-panel-head').style.display='none';
-  document.getElementById('ls').classList.add('on');
-  try{
-    const r=await fetch(WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
-    document.getElementById('ls').classList.remove('on');
-    if(r.ok||r.status===200){ document.getElementById('ls').classList.remove('on'); showSec(4); }
-    else{
-      try{const j=await r.json();document.getElementById('form-panel-head').style.display='';showSec(3);showErr(j.error||'Something went wrong. Please try again.');}
-      catch{document.getElementById('ls').classList.remove('on'); showSec(4);}
-    }
-  }catch{
-    document.getElementById('ls').classList.remove('on');
-    document.getElementById('form-panel-head').style.display='';
-    showSec(3); showErr('Connection error. Please check your internet and try again.');
-  }
-});
+function goPrev(){ if(cur > 1) showSec(cur-1); }
 
-document.querySelectorAll('input,select,textarea').forEach(f=>f.addEventListener('input',()=>f.classList.remove('bad')));
+function showErr(m){
+  var e = document.getElementById('ebar');
+  e.textContent = m;
+  e.style.display = 'block';
+  setTimeout(function(){e.style.display = 'none';}, 5000);
+}
+
+async function submitWithRetry(data, maxRetries) {
+  maxRetries = maxRetries || 3;
+  for (var attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      var res = await fetch(WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        keepalive: true
+      });
+      if (res.ok) return true;
+      if (attempt === maxRetries) return false;
+    } catch (e) {
+      if (attempt === maxRetries) return false;
+    }
+    await new Promise(function(r){ setTimeout(r, 1000 * attempt); });
+  }
+  return false;
+}
+
+function isBot() {
+  var hp = document.querySelector('input[name="company_url"]');
+  if (hp && hp.value.trim() !== '') return true;
+  if (Date.now() - PAGE_LOAD_TIME < 3000) return true;
+  return false;
+}
+
+var saveTimer = null;
+function autoSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(function(){
+    var formData = {};
+    document.querySelectorAll('#vform input, #vform select, #vform textarea').forEach(function(f){
+      if(f.name && f.type !== 'hidden' && f.type !== 'checkbox' && f.name !== 'company_url') {
+        formData[f.name] = f.value;
+      }
+    });
+    var cbs = [];
+    document.querySelectorAll('#cbg input:checked').forEach(function(c){ cbs.push(c.value); });
+    formData._checkboxes = cbs;
+    formData._ackChecked = document.getElementById('ack-check').checked;
+    formData._currentStep = cur;
+    try {
+      sessionStorage.setItem('aurum_valuation_draft', JSON.stringify(formData));
+      var toast = document.getElementById('save-toast');
+      if(toast) {
+        toast.classList.add('show');
+        setTimeout(function(){ toast.classList.remove('show'); }, 1500);
+      }
+    } catch(e) {}
+  }, 500);
+}
+
+function restoreDraft() {
+  try {
+    var saved = sessionStorage.getItem('aurum_valuation_draft');
+    if (!saved) return;
+    var data = JSON.parse(saved);
+    Object.keys(data).forEach(function(key){
+      if (key.charAt(0) === '_') return;
+      var el = document.querySelector('#vform [name="'+key+'"]');
+      if (el) el.value = data[key];
+    });
+    if (data.industrySector) {
+      document.getElementById('nsec').value = data.industrySector;
+      doSub();
+      if (data.industrySubsector) {
+        setTimeout(function(){
+          document.getElementById('nsub').value = data.industrySubsector;
+          doGrp();
+          if (data.industryGroup) {
+            setTimeout(function(){
+              document.getElementById('ngrp').value = data.industryGroup;
+            }, 50);
+          }
+        }, 50);
+      }
+    }
+    if (data.revenueMix && data.industrySector) {
+      setTimeout(function(){
+        var rm = document.getElementById('revMix');
+        if(rm) rm.value = data.revenueMix;
+      }, 150);
+    }
+    if (data._checkboxes && data._checkboxes.length) {
+      data._checkboxes.forEach(function(val){
+        var cb = document.querySelector('#cbg input[value="'+val+'"]');
+        if(cb) cb.checked = true;
+      });
+    }
+    if (data._ackChecked) {
+      document.getElementById('ack-check').checked = true;
+    }
+  } catch(e) { console.warn('Could not restore draft:', e); }
+}
+
+function trackStep(stepNum, stepName) {
+  if (window._hsq) {
+    window._hsq = window._hsq || [];
+    window._hsq.push(['trackCustomBehavioralEvent', {
+      name: 'pe244415066_valuation_step_completed',
+      properties: { step_number: stepNum, step_name: stepName }
+    }]);
+  }
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'valuation_step',
+    step_number: stepNum,
+    step_name: stepName
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelector('[name=campaignId]').value = up.get('campaign')||up.get('utm_campaign')||'';
+  document.querySelector('[name=source]').value = up.get('source')||up.get('utm_source')||'Website';
+
+  document.querySelectorAll('[data-action="next"]').forEach(function(btn){
+    btn.addEventListener('click', goNext);
+  });
+  document.querySelectorAll('[data-action="prev"]').forEach(function(btn){
+    btn.addEventListener('click', goPrev);
+  });
+
+  document.querySelectorAll('[data-fmt="currency"]').forEach(function(el){
+    el.addEventListener('input', function(){ fmtC(this); });
+    el.addEventListener('blur', function(){ finC(this); });
+  });
+
+  document.getElementById('nsec').addEventListener('change', doSub);
+  document.getElementById('nsub').addEventListener('change', doGrp);
+
+  document.querySelectorAll('#vform input, #vform select, #vform textarea').forEach(function(f){
+    f.addEventListener('input', function(){ this.classList.remove('bad'); });
+  });
+
+  document.getElementById('ack-check').addEventListener('change', function(){
+    document.getElementById('ack-wrap').classList.remove('bad');
+  });
+
+  document.querySelectorAll('#vform input, #vform select, #vform textarea').forEach(function(f){
+    f.addEventListener('input', autoSave);
+    f.addEventListener('change', autoSave);
+  });
+
+  document.getElementById('vform').addEventListener('submit', async function(e){
+    e.preventDefault();
+    if(!check(cur)){showErr('Please complete all required fields.');return;}
+
+    if(isBot()){
+      showSec(4);
+      return;
+    }
+
+    collectCB();
+    var data = Object.fromEntries(new FormData(e.target).entries());
+    ['annualRevenue','annualProfit','totalAssets','totalLiabilities'].forEach(function(k){
+      if(data[k]) data[k] = data[k].replace(/,/g,'');
+    });
+    data._loadedAt = PAGE_LOAD_TIME;
+    data._submitDuration = Date.now() - PAGE_LOAD_TIME;
+
+    var submitBtn = document.getElementById('submit-btn');
+    var originalText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="btn-spinner"></span> Submitting...';
+    document.getElementById('ls').classList.add('on');
+    document.querySelector('[data-sec="3"]').classList.remove('on');
+
+    var success = await submitWithRetry(data);
+
+    document.getElementById('ls').classList.remove('on');
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalText;
+
+    if(success){
+      sessionStorage.removeItem('aurum_valuation_draft');
+      showSec(4);
+    } else {
+      document.querySelector('[data-sec="3"]').classList.add('on');
+      document.getElementById('retry-bar').style.display = 'flex';
+    }
+  });
+
+  document.getElementById('retry-btn').addEventListener('click', function(){
+    document.getElementById('retry-bar').style.display = 'none';
+    document.getElementById('vform').dispatchEvent(new Event('submit'));
+  });
+
+  restoreDraft();
+});
 </script>
 </body>
 </html>
