@@ -424,8 +424,8 @@ body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(
             <input type="hidden" name="submissionId" value="">
             <!-- Honeypot field for bot protection -->
             <div class="honeypot" aria-hidden="true">
-              <label>Company URL</label>
-              <input type="text" name="company_url" tabindex="-1" autocomplete="off">
+              <label>Company Fax</label>
+              <input type="text" name="company_fax" tabindex="-1" autocomplete="off">
             </div>
             <!-- S1 CONTACT -->
             <div class="fs on" data-sec="1">
@@ -475,15 +475,16 @@ body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(
                   <div class="error-text">Please select an industry sector</div>
                 </div>
                 <div class="naics-sub f" id="nsubwrap">
-                  <label for="nsub">Industry Subsector</label>
-                  <select id="nsub" name="industrySubsector">
+                  <label for="nsub">Industry Subsector <span class="r">*</span></label>
+                  <select id="nsub" name="industrySubsector" required>
                     <option value="">Select subsector</option>
                   </select>
+                  <div class="error-text">Please select an industry subsector</div>
                 </div>
               </div>
               <div class="naics-row2" id="ngrow">
-                <div class="f"><label for="ngrp">Industry Group</label><select id="ngrp" name="industryGroup"><option value="">Select industry group</option></select></div>
-                <div class="f"><label for="subInd">Additional Specialization</label><input id="subInd" type="text" name="subIndustry" placeholder="e.g., SaaS, Medical Devices, HVAC"></div>
+                <div class="f"><label for="ngrp">Industry Group <span class="r">*</span></label><select id="ngrp" name="industryGroup" required><option value="">Select industry group</option></select><div class="error-text">Please select an industry group</div></div>
+                <div class="f"><label for="subInd">Sub-Industry / Specialization <span class="r">*</span></label><input id="subInd" type="text" name="subIndustry" required placeholder="e.g., SaaS, Medical Devices, HVAC"><div class="error-text">Please enter your sub-industry or specialization</div></div>
               </div>
               <div class="row">
                 <div class="f"><label for="bizType">Business Structure</label><select id="bizType" name="businessType"><option value="LLC">LLC</option><option value="S-Corp">S-Corporation</option><option value="C-Corp">C-Corporation</option><option value="Partnership">Partnership</option><option value="Sole Proprietorship">Sole Proprietorship</option><option value="Other">Other</option></select></div>
@@ -531,7 +532,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(
             <div class="fs" data-sec="3">
               <div class="row">
                 <div class="f"><label for="annRev">Annual Revenue <span class="r">*</span></label><div class="pfx"><input id="annRev" type="text" name="annualRevenue" required placeholder="1,000,000.00" data-fmt="currency"></div><div class="error-text">Please enter annual revenue</div></div>
-                <div class="f"><label for="annProfit">Annual EBITDA / Profit <span class="opt">(optional)</span></label><div class="pfx"><input id="annProfit" type="text" name="annualProfit" placeholder="150,000.00" data-fmt="currency"></div></div>
+                <div class="f"><label for="annProfit">Annual EBITDA / Profit <span class="r">*</span></label><div class="pfx"><input id="annProfit" type="text" name="annualProfit" required placeholder="150,000.00" data-fmt="currency"></div><div class="error-text">Please enter annual EBITDA or profit</div></div>
               </div>
               <div class="row">
                 <div class="f"><label for="revGrow">Annual Revenue Growth Rate (YoY)</label><div class="sfx"><input id="revGrow" type="number" name="revenueGrowthRate" step="0.1" min="-100" max="1000" placeholder="15.0"></div></div>
@@ -1136,7 +1137,7 @@ function updateValidStates(){
   var activeSec = document.querySelector('.fs.on');
   if(!activeSec) return;
   activeSec.querySelectorAll('input, select, textarea').forEach(function(f){
-    if(f.type === 'hidden' || f.type === 'checkbox' || f.name === 'company_url') return;
+    if(f.type === 'hidden' || f.type === 'checkbox' || f.name === 'company_fax') return;
     if(f.classList.contains('bad')) { f.classList.remove('valid'); return; }
     if(f.value.trim() !== '') f.classList.add('valid');
     else f.classList.remove('valid');
@@ -1162,6 +1163,13 @@ function check(n){
   var sec = document.querySelector('[data-sec="'+n+'"]');
   var ok = true;
   sec.querySelectorAll('[required]').forEach(function(f){
+    // Skip validation for fields inside hidden conditional containers
+    var condParent = f.closest('.naics-sub, .naics-row2');
+    if(condParent && !condParent.classList.contains('on')) {
+      f.classList.remove('bad');
+      f.removeAttribute('aria-invalid');
+      return;
+    }
     var v = f.value.trim() !== '';
     f.classList.toggle('bad',!v);
     f.setAttribute('aria-invalid', !v);
@@ -1225,7 +1233,7 @@ async function submitWithRetry(data, maxRetries) {
 }
 
 function isBot() {
-  var hp = document.querySelector('input[name="company_url"]');
+  var hp = document.querySelector('input[name="company_fax"]');
   if (hp && hp.value.trim() !== '') return true;
   if (Date.now() - PAGE_LOAD_TIME < 8000) return true;
   return false;
@@ -1237,7 +1245,7 @@ function autoSave() {
   saveTimer = setTimeout(function(){
     var formData = {};
     document.querySelectorAll('#vform input, #vform select, #vform textarea').forEach(function(f){
-      if(f.name && f.type !== 'hidden' && f.type !== 'checkbox' && f.name !== 'company_url') {
+      if(f.name && f.type !== 'hidden' && f.type !== 'checkbox' && f.name !== 'company_fax') {
         formData[f.name] = f.value;
       }
     });
